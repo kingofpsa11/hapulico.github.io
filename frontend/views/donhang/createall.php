@@ -48,7 +48,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 			$.post("lists?id="+$(this).val(), function( data ) {
                 			var value = data.split("+");
                 			$( "#donhang-sodh" ).attr("value",value[0]);
-                			$( "#donhang-ngay" ).attr("value",value[1]);
+
 
                 			$("#modalButton").each(function(){
                 				$(this).attr("value","/hapulico/donhang/create?iddvdh="+value[2]);
@@ -62,40 +62,37 @@ $this->params['breadcrumbs'][] = $this->title;
 			</div>
 
 	    	<div class="col-lg-4">
-	        <?= $form->field($model,'ngay')->widget(\yii\widgets\MaskedInput::classname(),['clientOptions' => ['alias' =>  'yyyy-mm-dd']]);?>
+	        <?php
+	                        			// $( "#donhang-ngay" ).attr("value",value[1]);
+	        $date = date('yyyy-mm-dd',time());
+	        echo $form->field($model,'ngay')->widget(\kartik\date\DatePicker::classname(),[
+	        	'value' => $date,
+	        	'pluginOptions' => [
+	        		'autoclose' => true,
+	        		'format' => 'yyyy-mm-dd',
+	        	]
+	        ]);?>
 	        </div>
 	    </div>
-	    <?php
-	        // echo Form::widget([
-	        //     'model' => $model,
-	        //     'form'=>$form,
-	        //     'columns'=>3,
-	        //     'attributes'=>[
-	        //         'sodh' => [
-	        //         	'type'=>Form::INPUT_RAW,
-	        //         	'value'=>function($model,$index,$widget){
-	        //         		return $model->find()->select('sodh')->orderBy('sodh')->one()->sodh;
-	        //         	}
-	        //     	],
-	        //         'iddvdh' => [
-	        //         	'type'=>Form::INPUT_DROPDOWN_LIST,
-         //                'items'=> ArrayHelper::map($customer,'id','tenkhach'),
-         //            ],
-	        //         'ngay' =>   [
-         //                'type'=>Form::INPUT_WIDGET,
-         //                'widgetClass'=>'\kartik\date\DatePicker',
-         //            ],
-	        //     ],
-	        // ]);
-	     ?>
+
 	    <?php
 	    	$data = [
-	    		['id'=>1,'tensanpham'=>'Đèn Halumos 150W'],
-				['id'=>2,'tensanpham'=>'Đèn Halumos 250W'],
+	    		[
+	    			'idsanpham' => '12397',
+	    			'soluong' => '20',
+	    			'gia' => '1500000',
+	    			'tiendo' => '2018-09-15'
+	    		],
+	    		[
+	    			'idsanpham' => '12397',
+	    			'soluong' => '20',
+	    			'gia' => '1500000',
+	    			'tiendo' => '2018-09-15'
+	    		],
 	    	];
-
-	    	echo json_encode($data[0]);
-	    	// die;
+	    	if (isset($_POST['idsanpham'])){
+	    	echo $_POST['idsanpham'];
+	    	}
 	    	$dataProvider =  new \yii\data\ArrayDataProvider([
 	    		'allModels' => $data,
 			]);
@@ -104,7 +101,7 @@ $this->params['breadcrumbs'][] = $this->title;
 	    		'dataProvider' => $dataProvider,
 	    		'formName' => 'donhangForm',
 	    		'attributes' => [
-	    			'tensanpham' => [
+	    			'idsanpham' => [
 	    				'label' => 'Tên sản phẩm',
 	    				'type' => TabularForm::INPUT_STATIC,
 	    				'columnOptions' => ['width'=>'300px'],
@@ -129,7 +126,7 @@ $this->params['breadcrumbs'][] = $this->title;
 	    				// 'type'
 	    				'before' => false,
 	    				'footer' => false,
-	    				'after' => Html::button('<i class="glyphicon glyphicon-plus"></i> Thêm mới',['type'=>'button','class'=>'btn btn-success','			id' => 'modalButton']).' '.
+	    				'after' => Html::button('<i class="glyphicon glyphicon-plus"></i> Thêm mới',['type'=>'button','class'=>'btn btn-success','id' => 'modalButton']).' '.
 	    							Html::button('<i class="glyphicon glyphicon-remove"></i> Xóa',['type'=>'button','class'=>'btn btn-danger']).' '.
 	    							Html::submitButton('<i class="glyphicon glyphicon-floppy-disk"></i> Lưu',['type'=>'button','class'=>'btn btn-primary']),
 	    			],
@@ -196,14 +193,9 @@ $this->params['breadcrumbs'][] = $this->title;
 	    <?= $form->field($modelDetail, 'giaban')->hiddenInput()->label('') ?>
 		
 	    <?php
-	    	echo Html::button('Thêm mới',['class'=>'btn btn-success','id'=>'save']);
+	    	echo Html::button('Thêm mới',['class'=>'btn btn-success','id'=>'save-modal']);
 	        Modal::end();
 	     ?>
 		
 	</div>
 </div>
-<!-- <script type="text/javascript">
-	var users = <?php echo json_encode($data);?>;
-	console.log(users[0]['id']);
-	console.log (users.length);
-</script> -->

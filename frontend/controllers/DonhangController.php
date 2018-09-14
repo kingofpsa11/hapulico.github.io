@@ -189,13 +189,14 @@ class DonhangController extends Controller
 
     public function actionLaygia($idsanpham,$soluong,$tiendo)
     {   
-        $model = Banggia::find($idsanpham);
+        $model = Banggia::find()->where('id = :id',[':id' => $idsanpham])->one();
         $result = [
             'idsanpham' => $idsanpham,
             'soluong' => $soluong,
             'gia' => $model->giavtcn,
             'tiendo' => $tiendo,
         ];
+
         die(json_encode($result));
     }
 
