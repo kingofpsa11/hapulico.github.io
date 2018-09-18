@@ -8,21 +8,14 @@ $(function(){
 
 	$('#save-modal').click(function(){
 		// count = count + 1;
-		var content = $('tbody:has(tr)').html();
-		console.log(content);
-		$.get({
-			url: base_url+'/hapulico/donhang/laygia',
-			data: {
-				idsanpham: $('#idsanpham').val(),
-				soluong: $('#soluong').val(),
-				tiendo: $('#tiendo').val(),
-			},
-			dataType: 'json',
-			success: function(result){
-				var content = $('tr').html();
-				console.log(content);
-			}
-		});
+		var elements = $('tbody>tr[data-key]');
+		var element = $('tbody>tr[data-key]:first').clone();
+		element.attr('data-key', elements.length);
+		element.children('[data-col-seq]:first').html()
+		console.log(element.children('[data-col-seq]:first').html());
+
+		$('tbody').append(element);
+
 		$('#modal').modal('hide');
 	});
 
