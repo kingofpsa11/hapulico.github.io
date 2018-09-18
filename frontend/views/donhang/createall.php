@@ -25,6 +25,9 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="donhang-create">
 
     <h1><?= Html::encode($this->title) ?></h1>
+    <h2>
+    	<div id="content2">Content here!</div>
+    </h2>
 
     <div class="donhang-form">
 
