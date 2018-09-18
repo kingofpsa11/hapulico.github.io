@@ -51,8 +51,6 @@ $this->params['breadcrumbs'][] = $this->title;
                 			$.post("lists?id="+$(this).val(), function( data ) {
                 			var value = data.split("+");
                 			$( "#donhang-sodh" ).attr("value",value[0]);
-
-
                 			$("#modalButton").each(function(){
                 				$(this).attr("value","/hapulico/donhang/create?iddvdh="+value[2]);
                 			});
@@ -190,8 +188,6 @@ $this->params['breadcrumbs'][] = $this->title;
 	            'autoclose' => true,
 	        ],
 	    ]) ?>
-
-	    <?= $form->field($modelDetail, 'tiendothucte')->textInput() ?>
 
 	    <?= $form->field($modelDetail, 'giaban')->hiddenInput()->label('') ?>
 		
