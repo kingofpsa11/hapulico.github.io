@@ -25,9 +25,6 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="donhang-create">
 
     <h1><?= Html::encode($this->title) ?></h1>
-    <h2>
-    	<div id="content2">Content here!</div>
-    </h2>
 
     <div class="donhang-form">
 
@@ -48,7 +45,7 @@ $this->params['breadcrumbs'][] = $this->title;
 	        		[
 	        			'prompt' => 'Lựa chọn khách hàng',
 	        			'onchange'=>'
-                			$.post("lists?id="+$(this).val(), function( data ) {
+                			$.post("lists?id="+$(this).val(), function(data) {
                 			var value = data.split("+");
                 			$( "#donhang-sodh" ).attr("value",value[0]);
                 			$("#modalButton").each(function(){
@@ -64,7 +61,6 @@ $this->params['breadcrumbs'][] = $this->title;
 
 	    	<div class="col-lg-4">
 	        <?php
-	                        			// $( "#donhang-ngay" ).attr("value",value[1]);
 	        $date = date('yyyy-mm-dd',time());
 	        echo $form->field($model,'ngay')->widget(\kartik\date\DatePicker::classname(),[
 	        	'value' => $date,
@@ -80,12 +76,14 @@ $this->params['breadcrumbs'][] = $this->title;
 	    	$data = [
 	    		[
 	    			'idsanpham' => '12397',
+	    			'tensanpham'=>'Đèn Halumos 150W',
 	    			'soluong' => '20',
 	    			'gia' => '1500000',
 	    			'tiendo' => '2018-09-15'
 	    		],
 	    		[
 	    			'idsanpham' => '12397',
+	    			'tensanpham'=>'Đèn Halumos 150W',
 	    			'soluong' => '20',
 	    			'gia' => '1500000',
 	    			'tiendo' => '2018-09-15'
@@ -103,6 +101,10 @@ $this->params['breadcrumbs'][] = $this->title;
 	    		'formName' => 'donhangForm',
 	    		'attributes' => [
 	    			'idsanpham' => [
+	    				'type' => TabularForm::INPUT_HIDDEN,
+	    				'columnOptions' => ['hidden'=>true]
+	    			],
+	    			'tensanpham' => [
 	    				'label' => 'Tên sản phẩm',
 	    				'type' => TabularForm::INPUT_STATIC,
 	    				'columnOptions' => ['width'=>'300px'],

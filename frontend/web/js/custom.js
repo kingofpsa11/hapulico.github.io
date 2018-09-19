@@ -8,46 +8,36 @@ $(function(){
 
 	$('#save-modal').click(function(){
 		// count = count + 1;
-<<<<<<< HEAD
-		var element = $('tbody>tr:first');
-		console.log(element);
-		var content = element.html();
-		$('tbody').append("<tr>"+content+"</tr>");
-		// $.get({
-		// 	url: base_url+'/hapulico/donhang/laygia',
-		// 	data: {
-		// 		idsanpham: $('#idsanpham').val(),
-		// 		soluong: $('#soluong').val(),
-		// 		tiendo: $('#tiendo').val(),
-		// 	},
-		// 	dataType: 'json',
-		// 	success: function(result){
-		// 		var content = $('tr').html();
-		// 		console.log(content);
-		// 	}
-		// });
-		$('#modal').modal('hide');
-	});
-
-});
-=======
+		
 		var elements = $('tbody>tr[data-key]');
-		var element = $('tbody>tr[data-key]:last').clone();
+		var element = $('tbody>tr[data-key]:first').clone();
+		// 
 		element.attr('data-key', elements.length);
 		element.attr('id', 'stt_'+elements.length);
+
+		//Tạo STT mới
 		var stt = parseInt(element.children('[data-col-seq]:first').html());
 		stt++;
 		element.children('[data-col-seq]:first').html(stt);
 
-		var tensanpham = $('#donhangchitiet-idsanpham');
+		//Giá trị tên sản phẩm trong modal
+		var idsanpham = $('#donhangchitiet-idsanpham > option:last').attr('value');
+		var tensanpham = $('#donhangchitiet-idsanpham > option:last').html();
+		console.log(idsanpham);
 		console.log(tensanpham);
-		
+		console.log(element.children('td[data-col-seq="1"]').html());
+		element.children('[data-col-seq="1"] input').attr('value', idsanpham);
+		element.children('[data-col-seq="2"]').text(tensanpham);
+
+		// Giá trị số lượng trong modal
+		var soluong = $("#donhangchitiet-soluong").val();
+		element.children('[data-col-seq="3"]').text(soluong);
 
 		$('tbody').append(element);
 
 		$('#modal').modal('hide');
 	});
 
-
 });
->>>>>>> 38279bb2e19d7d931fa0f62738638b81df5923ed
+
+
