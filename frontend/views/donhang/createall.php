@@ -28,7 +28,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <div class="donhang-form">
 
-	    <?php 
+	    <?php
 	        $form = ActiveForm::begin();
 	        $customer = Khachhang::find()->where(['loaikhach'=>1])->all();
 	        $customer = ArrayHelper::map($customer,'id','tenkhach');
@@ -61,86 +61,158 @@ $this->params['breadcrumbs'][] = $this->title;
 
 	    	<div class="col-lg-4">
 	        <?php
-	        $date = date('yyyy-mm-dd',time());
+	        $date = date('Y-m-d',time());
+	        $model->ngay = $date;
 	        echo $form->field($model,'ngay')->widget(\kartik\date\DatePicker::classname(),[
-	        	'value' => $date,
 	        	'pluginOptions' => [
 	        		'autoclose' => true,
 	        		'format' => 'yyyy-mm-dd',
 	        	]
-	        ]);?>
+	        ]);
+	        ?>
 	        </div>
 	    </div>
 
 	    <?php
 	    	$data = [
-	    		[
-	    			'idsanpham' => '12397',
-	    			'tensanpham'=>'Đèn Halumos 150W',
-	    			'soluong' => '20',
-	    			'gia' => '1500000',
-	    			'tiendo' => '2018-09-15'
-	    		],
-	    		[
-	    			'idsanpham' => '12397',
-	    			'tensanpham'=>'Đèn Halumos 150W',
-	    			'soluong' => '20',
-	    			'gia' => '1500000',
-	    			'tiendo' => '2018-09-15'
-	    		],
+		    			// [
+	        //                 'idsanpham' => '12397',
+	        //                 'tensanpham'=>'Đèn Halumos 150W',
+	        //                 'soluong' => '20',
+	        //                 'gia' => '1500000',
+	        //                 'tiendo' => '2018-09-15'
+	        //             ],
+	        //             [
+	        //                 'idsanpham' => '12397',
+	        //                 'tensanpham'=>'Đèn Halumos 150W',
+	        //                 'soluong' => '20',
+	        //                 'gia' => '1500000',
+	        //                 'tiendo' => '2018-09-15'
+	        //             ],
 	    	];
 	    	if (isset($_POST['idsanpham'])){
+
 	    	echo $_POST['idsanpham'];
 	    	}
 	    	$dataProvider =  new \yii\data\ArrayDataProvider([
 	    		'allModels' => $data,
 			]);
+			?>
+			<div class="panel panel-default">
+				<div class="panel-body">
+					
+				
+			<?php
+	    	echo GridView::widget([
+		        'dataProvider' => $dataProvider,
+		        'filterModel' => false,
+		        'columns' => [
+		            [
+		            	'class' => 'yii\grid\SerialColumn',
+            			'header' => 'STT',
+            			'options' => [
+            				'width' => '50px',
+            			],
+		            ],
 
-	    	echo TabularForm::widget([
-	    		'dataProvider' => $dataProvider,
-	    		'formName' => 'donhangForm',
-	    		'attributes' => [
-	    			'idsanpham' => [
-	    				'type' => TabularForm::INPUT_HIDDEN,
-	    				'columnOptions' => ['hidden'=>true]
-	    			],
-	    			'tensanpham' => [
-	    				'label' => 'Tên sản phẩm',
-	    				'type' => TabularForm::INPUT_STATIC,
-	    				'columnOptions' => ['width'=>'300px'],
-	    			],
-	    			'soluong' => [
-	    				'label' => 'Số lượng',
-	    				'type' => TabularForm::INPUT_STATIC,
-	    				'columnOptions' => ['width'=>'80px'],
-	    			],
-	    			'gia' =>[
-	    				'label' => 'Đơn giá',
-	    				'type' => TabularForm::INPUT_STATIC,
-	    			],
-	    			'tiendo'=>[
-	    				'label' => 'Tiến độ yêu cầu',
-	    				'type' => TabularForm::INPUT_STATIC,
-	    			],
-	    		],
-	    		'gridSettings' => [
-	    			'panel' => [
-	    				'heading' => '<h3 class="panel-title"><i class="glyphicon glyphicon-book"></i> Nội dung đơn hàng </h3>',
-	    				// 'type'
-	    				'before' => false,
-	    				'footer' => false,
-	    				'after' => Html::button('<i class="glyphicon glyphicon-plus"></i> Thêm mới',['type'=>'button','class'=>'btn btn-success','id' => 'modalButton']).' '.
-	    							Html::button('<i class="glyphicon glyphicon-remove"></i> Xóa',['type'=>'button','class'=>'btn btn-danger']).' '.
-	    							Html::submitButton('<i class="glyphicon glyphicon-floppy-disk"></i> Lưu',['type'=>'button','class'=>'btn btn-primary']),
-	    			],
-	    		],
-	    	])
+		            [
+		            	'attribute' => 'idsanpham',
+		            	'visible' => false,
+		            ],
+		            [
+		            	'attribute' => 'tensanpham',
+		            	'label' => 'Tên sản phẩm',
+		            	'headerOptions' => [
+		            		'style' => 'text-align:center;',
+		            	],
+		        	],
+		        	[
+		        		'attribute' => 'soluong',
+		        		'label' => 'Số lượng',
+		        		'headerOptions' => [
+		        			'style' => 'text-align:center',
+		        		],
+		        	],
+		            [
+		        		'attribute' => 'gia',
+		        		'label' => 'Đơn giá',
+		        		'headerOptions' => [
+		        			'style' => 'text-align:center',
+		        		],
+		        	],
+		            [
+		        		'attribute' => 'tiendo',
+		        		'label' => 'Tiến độ',
+		        		'headerOptions' => [
+		        			'style' => 'text-align:center',
+		        		],
+		        		'contentOptions' => [
+		        			'style' => 'text-align:center',
+		        		],
+		        	],
+		            [
+		                'class' => 'yii\grid\ActionColumn',
+		                'template' => '{view}{delete}{link}',
+		                'contentOptions' => [
+		        			'style' => 'text-align:center',
+		        		],
+		                'buttons' => [
+		                    'view' => function ($url,$model){
+		                        return Html::a('<span class="glyphicon glyphicon-user"></span>','javascript:void()');
+		                    },
+
+		                ]
+		            ],
+		        ],
+		    ]); 
+	    	// echo TabularForm::widget([
+	    	// 	'dataProvider' => $dataProvider,
+	    	// 	'formName' => 'donhangForm',
+	    	// 	'attributes' => [
+	    	// 		'idsanpham' => [
+	    	// 			'type' => TabularForm::INPUT_HIDDEN,
+	    	// 			'columnOptions' => ['hidden'=>true]
+	    	// 		],
+	    	// 		'tensanpham' => [
+	    	// 			'label' => 'Tên sản phẩm',
+	    	// 			'type' => TabularForm::INPUT_STATIC,
+	    	// 			'columnOptions' => ['width'=>'300px'],
+	    	// 		],
+	    	// 		'soluong' => [
+	    	// 			'label' => 'Số lượng',
+	    	// 			'type' => TabularForm::INPUT_STATIC,
+	    	// 			'columnOptions' => ['width'=>'80px'],
+	    	// 		],
+	    	// 		'gia' =>[
+	    	// 			'label' => 'Đơn giá',
+	    	// 			'type' => TabularForm::INPUT_STATIC,
+	    	// 		],
+	    	// 		'tiendo'=>[
+	    	// 			'label' => 'Tiến độ yêu cầu',
+	    	// 			'type' => TabularForm::INPUT_STATIC,
+	    	// 		],
+	    	// 	],
+	    	// 	'gridSettings' => [
+	    	// 		'panel' => [
+	    	// 			'heading' => '<h3 class="panel-title"><i class="glyphicon glyphicon-book"></i> Nội dung đơn hàng </h3>',
+	    	// 			// 'type'
+	    	// 			'before' => false,
+	    	// 			'footer' => false,
+	    	// 			'after' => Html::button('<i class="glyphicon glyphicon-plus"></i> Thêm mới',['type'=>'button','class'=>'btn btn-success','id' => 'modalButton']).' '.
+	    	// 						Html::button('<i class="glyphicon glyphicon-remove"></i> Xóa',['type'=>'button','class'=>'btn btn-danger']).' '.
+	    	// 						Html::submitButton('<i class="glyphicon glyphicon-floppy-disk"></i> Lưu',['type'=>'button','class'=>'btn btn-primary']),
+	    	// 		],
+	    	// 	],
+	    	// ])
 	     ?>
-		<!-- <div class="form-group">
-	        <?= Html::submitButton('Tạo đơn hàng', ['class' => 'btn btn-success']) ?>
-	    </div> -->
-		<?php ActiveForm::end(); ?>
+	     <?php 
+	     	echo Html::button('<i class="glyphicon glyphicon-plus"></i> Thêm mới',['type'=>'button','class'=>'btn btn-success','id' => 'modalButton']).' '.Html::submitButton('<i class="glyphicon glyphicon-floppy-disk"></i> Lưu',['type'=>'button','class'=>'btn btn-primary']);
+	      ?>
+	     </div>
+			</div>
 
+		<?php ActiveForm::end(); ?>
+	
 	    <?php 
 	        Modal::begin([
 	            'header'=>'<h4>Thêm mới sản phẩm</h4>',
