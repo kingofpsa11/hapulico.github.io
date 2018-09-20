@@ -19,7 +19,27 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= Html::a('Tạo đơn hàng mới', ['createall'], ['class' => 'btn btn-success']) ?>
     </p>
 
-    <?= GridView::widget([
+    <?php
+        $data = [
+                    [
+                        'id' => '1',
+                        'iddvdh'=>'123456',
+                        'sodh' => 'BHPL.18.105',
+                        'ngay' => '2018-12-30',
+                    ],
+                    [
+                        'id' => '1',
+                        'iddvdh'=>'123456',
+                        'sodh' => 'BHPL.18.105',
+                        'ngay' => '2018-12-30',
+                    ],
+                ];
+
+        $dataProvider =  new \yii\data\ArrayDataProvider([
+            'allModels' => $data,
+        ]);
+            
+    echo GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
@@ -29,7 +49,15 @@ $this->params['breadcrumbs'][] = $this->title;
             'sodh',
             'ngay',
 
-            ['class' => 'yii\grid\ActionColumn'],
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'template' => '{view}{delete}{link}',
+                'buttons' => [
+                    'view' => function ($url,$model){
+                        return Html::a('<span class="glyphicon glyphicon-user"></span>','javascript:void()');
+                    },
+                ]
+            ],
         ],
     ]); ?>
 </div>
