@@ -9,6 +9,7 @@ $(function(){
 	$('#save-modal').click(function(){
 		
 <<<<<<< HEAD
+<<<<<<< HEAD
 		var elements = $('tbody>tr[data-key]');
 		var element = $('tbody>tr[data-key]:last').clone();
 		// 
@@ -35,6 +36,8 @@ $(function(){
 
 		$('tbody').append(element);
 =======
+=======
+>>>>>>> 9225bbeae9abd06f9362dea6cfa687aac0ae15d0
 		//Tabular kartik
 		// Clone dòng cuối cùng của 
 		// var element = $('tbody>tr[data-key]:last').clone();
@@ -80,6 +83,9 @@ $(function(){
 			</tr>"
 		)
 		// $('tbody').append(element);
+<<<<<<< HEAD
+>>>>>>> 9225bbeae9abd06f9362dea6cfa687aac0ae15d0
+=======
 >>>>>>> 9225bbeae9abd06f9362dea6cfa687aac0ae15d0
 
 		$('#modal').modal('hide');
