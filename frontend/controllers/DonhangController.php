@@ -200,6 +200,12 @@ class DonhangController extends Controller
         die(json_encode($result));
     }
 
+    public function actionGetprice($id)
+    {   
+
+        $gia = Banggia::findOne($id)->giavtcn;
+        echo $gia;
+    }
     protected function findModel($id)
     {
         if (($model = Donhang::findOne($id)) !== null) {

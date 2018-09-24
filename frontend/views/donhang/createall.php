@@ -91,8 +91,7 @@ $this->params['breadcrumbs'][] = $this->title;
 	        //             ],
 	    	];
 	    	if (isset($_POST['idsanpham'])){
-
-	    	echo $_POST['idsanpham'];
+	    		echo $_POST['idsanpham'];
 	    	}
 	    	$dataProvider =  new \yii\data\ArrayDataProvider([
 	    		'allModels' => $data,
@@ -100,8 +99,6 @@ $this->params['breadcrumbs'][] = $this->title;
 			?>
 			<div class="panel panel-default">
 				<div class="panel-body">
-					
-				
 			<?php
 	    	echo GridView::widget([
 		        'dataProvider' => $dataProvider,
@@ -110,7 +107,7 @@ $this->params['breadcrumbs'][] = $this->title;
 		            [
 		            	'class' => 'yii\grid\SerialColumn',
             			'header' => 'STT',
-            			'options' => [
+            			'headerOptions' => [
             				'width' => '50px',
             			],
 		            ],
