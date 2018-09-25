@@ -4,18 +4,12 @@ $(function(){
 	$('#donhang-iddvdh').change(function() {
 		$.$.ajax({
 			url: base_url+'hapulico/donhang/lists',
-			type: 'default GET (Other values: POST)',
-			dataType: 'default: Intelligent Guess (Other values: xml, json, script, or html)',
-			data: {param1: 'value1'},
-		})
-		.done(function() {
-			console.log("success");
-		})
-		.fail(function() {
-			console.log("error");
-		})
-		.always(function() {
-			console.log("complete");
+			type: 'GET',
+			dataType: 'text',
+			data: {id: idsanpham},
+			success: function(result){
+
+			}
 		});
 		
 		$.post("lists?id="+$(this).val(), function(data) {
@@ -24,31 +18,28 @@ $(function(){
 	});
 	
 	$('#modalButton').click(function (){
-<<<<<<< HEAD
+
 		$('#modal').modal('show');
 		$('#donhangchitiet-idsanpham > option:last').attr('value','');
 		$('#donhangchitiet-idsanpham > option:last').html('');
 		$('#donhangchitiet-soluong').val('');
 		$('#donhangchitiet-tiendo').val('');
-=======
+
 		if($('#donhang-sodh').val()!==''){
 			$('#modal').modal('show');
 			$('#save-modal').text('Thêm mới');
 			$('#donhangchitiet-soluong').val('');
 			$('#donhangchitiet-tiendo').val('');
 		}
->>>>>>> 363bd637cbb618b2210d54ca052b4ac00d9dced4
+
 	});
 
-
 	$('#save-modal').click(function(){
-<<<<<<< HEAD
+
 		count ++;
+
 		//Tabular form kartik
-=======
-		
-		//Tabular kartik
->>>>>>> 363bd637cbb618b2210d54ca052b4ac00d9dced4
+
 		// Clone dòng cuối cùng của 
 		// var element = $('tbody>tr[data-key]:last').clone();
 		// // 
@@ -77,64 +68,15 @@ $(function(){
 		//Gridview yii2
 
 		//Xóa nội dung của bảng nếu bảng chưa có sản phẩm
+		
 		if ($('tbody tr td div').hasClass('empty')) {
 			$('tbody').html('');
 		}
-<<<<<<< HEAD
-		var gia;
-		//Giá trị tên sản phẩm trong modal
+
 		var idsanpham = $('#donhangchitiet-idsanpham > option:last').attr('value');
 		var tensanpham = $('#donhangchitiet-idsanpham > option:last').html();
 		var soluong = $('#donhangchitiet-soluong').val();
 		var tiendo = $('#donhangchitiet-tiendo').val();
-
-		output = '<tr data-key="0" id="row_'+count+'">';
-		output += '<td>'+count+'</td>';
-		output += '<td data-col-seq="1" id="tensanpham_"'+count+'><input type="hidden" name="row_id" id="hidden_row_id_'+count+'" value="'+idsanpham+'"/>'+tensanpham+'</td>';
-		output += '<td data-col-seq="2" id="soluong_'+count+'">'+soluong+'</td>';
-		output += '<td data-col-seq="3" id="gia_'+count+'">'+gia+'</td>';
-		output += '<td style="text-align:center" data-col-seq="5" id="tiendo_'+count+'">'+tiendo+'</td>';
-		output += '<td><button type="button" name="view_details" class="btn btn-warning btn-xs view_details" id="'+count+'">View</button>'+' ';
-		output += '<button type="button" name="remove_details" class="btn btn-danger btn-xs remove_details" id="'+count+'">Remove</button></td>';
-		output += '</tr>';
-
-		$('tbody').append(output);
-		$.ajax({
-			type: "GET",
-			url: base_url+"/hapulico/banggia/getprice",
-			data: {
-				id: idsanpham,
-			},
-			success: function(result){
-				$('#gia_'+count).html(Number(result));
-			},
-			dataType: 'text',
-		});
-		$('#modal').modal('hide');
-	});
-
-	$(document).on('click', '.view_details', function(){
-		var row_id = $(this).attr('id');
-		$('#modal').modal('show');
-		$('#donhangchitiet-idsanpham > option:last').attr('value',$('#hidden_row_id').attr('value'));
-		$('#donhangchitiet-idsanpham > option:last').html($(''));
-		$('#donhangchitiet-soluong').val($('#soluong_'+row_id+'').html());
-		$('#donhangchitiet-tiendo').val($('#tiendo_'+row_id+'').html());
-	});
-
-	$(document).on('click', '.remove_details', function(){
-		var row_id = $(this).attr("id");
-		if(confirm("Are you sure you want to remove this row data?"))
-		{
-			$('#row_'+row_id+'').remove();
-		}
-		else
-		{
-=======
-		var idsanpham = $('#donhangchitiet-idsanpham > option:last').attr('value');
-			var tensanpham = $('#donhangchitiet-idsanpham > option:last').html();
-			var soluong = $('#donhangchitiet-soluong').val();
-			var tiendo = $('#donhangchitiet-tiendo').val();
 
 		if ($('#save-modal').text() == 'Thêm mới'){
 			count = count + 1;
@@ -166,9 +108,7 @@ $(function(){
 			dataType: 'text',
 			data: {id: idsanpham},
 			success: function(result){
-				// console.log(result);
 				$('#row_'+count+' td[data-col-seq="4"]').text(result);
-				// console.log($('row_'+count+'td[data-col-seq="4"]'));
 			}
 		});
 
@@ -193,7 +133,6 @@ $(function(){
 			$('#row_'+row_id).remove();
 		}
 		else{
->>>>>>> 363bd637cbb618b2210d54ca052b4ac00d9dced4
 			return false;
 		}
 	});
