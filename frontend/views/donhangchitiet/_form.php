@@ -11,14 +11,19 @@ use yii\widgets\ActiveForm;
 <div class="donhangchitiet-form">
 
     <?php $form = ActiveForm::begin(); ?>
+    <?php 
 
-    <?= $form->field($model, 'idsodh')->textInput() ?>
+        foreach ($models as $index => $model) {
+     ?>
+     <div class="row">
+    <?= $form->field($model, "[$index]idsodh")->textInput() ?>
 
-    <?= $form->field($model, 'idsanpham')->textInput() ?>
+    <?= $form->field($model, "[$index]idsanpham")->textInput() ?>
 
-    <?= $form->field($model, 'soluong')->textInput() ?>
-
-    <?= $form->field($model, 'idsolsx')->textInput() ?>
+    <?= $form->field($model, "[$index]soluong")->textInput() ?>
+    </div>
+    <?php } ?>
+  <!--   <?= $form->field($model, 'idsolsx')->textInput() ?>
 
     <?= $form->field($model, 'tiendo')->textInput() ?>
 
@@ -40,7 +45,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'ngaysua')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'iduser')->textInput() ?>
+    <?= $form->field($model, 'iduser')->textInput() ?> -->
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>

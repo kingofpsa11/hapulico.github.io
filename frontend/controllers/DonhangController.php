@@ -73,13 +73,7 @@ class DonhangController extends Controller
         $modelDetail = new Donhangchitiet();
 
         if ($model->load(Yii::$app->request->post())){
-            // $model->iddvdh = (int)$model->iddvdh;
-            // echo Yii::$app->formatter->format($model->ngay,'date');
 
-            // echo $model->ngay;
-            // echo Yii::$app->formatter->asDate($model->ngay, 'dd/MM/yyyy');
-            // var_dump($model->ngay);
-            // die;
             if ($model->save()) {
                 return $this->redirect(['index']);
             }
@@ -178,9 +172,10 @@ class DonhangController extends Controller
                 ->where(['iddvdh'=>$id])
                 ->orderBy(['sodh'=>SORT_DESC])
                 ->one();
-        $ngay = date('Y-m-d',time());
         if($model){
-            echo $model->sodh."+".$ngay."+".$id;
+            $sodh = $model->sodh;
+            $so = explode(".", $sodh);
+            var_dump($so);
         }
         else{
             echo '';
