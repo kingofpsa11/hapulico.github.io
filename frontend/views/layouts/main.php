@@ -69,15 +69,21 @@ AppAsset::register($this);
     </div>
 </div>
 
-<footer class="footer">
+<!-- <footer class="footer">
     <div class="container">
         <p class="pull-left">&copy; <?= Html::encode(Yii::$app->name) ?> <?= date('Y') ?></p>
 
         <p class="pull-right"><?= Yii::powered() ?></p>
     </div>
-</footer>
+</footer> -->
 
-<?php $this->endBody() ?>
+<?php
+//     if (class_exists('yii\debug\Module')) {
+//     $this->off(\yii\web\View::EVENT_END_BODY, [\yii\debug\Module::getInstance(), 'renderToolbar']);
+// }
+ $this->endBody();
+ ?>
+
 </body>
 </html>
 <?php $this->endPage() ?>

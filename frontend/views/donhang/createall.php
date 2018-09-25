@@ -24,7 +24,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="donhang-create">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <!-- <h1><?= Html::encode($this->title) ?></h1> -->
 
     <div class="donhang-form">
 
@@ -44,14 +44,6 @@ $this->params['breadcrumbs'][] = $this->title;
 	        		$customer,
 	        		[
 	        			'prompt' => 'Lựa chọn khách hàng',
-	        			'onchange'=>'
-                			$.post("lists?id="+$(this).val(), function(data) {
-                			var value = data.split("+");
-                			$( "#donhang-sodh" ).attr("value",value[0]);
-                			$("#modalButton").each(function(){
-                				$(this).attr("value","/hapulico/donhang/create?iddvdh="+value[2]);
-                			});
-                		});'
 	        		]
 	        	);?>
 	    	</div>
@@ -74,34 +66,20 @@ $this->params['breadcrumbs'][] = $this->title;
 	    </div>
 
 	    <?php
-	    	$data = [
-		    			// [
-	        //                 'idsanpham' => '12397',
-	        //                 'tensanpham'=>'Đèn Halumos 150W',
-	        //                 'soluong' => '20',
-	        //                 'gia' => '1500000',
-	        //                 'tiendo' => '2018-09-15'
-	        //             ],
-	        //             [
-	        //                 'idsanpham' => '12397',
-	        //                 'tensanpham'=>'Đèn Halumos 150W',
-	        //                 'soluong' => '20',
-	        //                 'gia' => '1500000',
-	        //                 'tiendo' => '2018-09-15'
-	        //             ],
-	    	];
-	    	if (isset($_POST['idsanpham'])){
+	    	$data = [];
 
-	    	echo $_POST['idsanpham'];
+	    	if (isset($_POST['idsanpham'])){
+	    		echo $_POST['idsanpham'];
 	    	}
 	    	$dataProvider =  new \yii\data\ArrayDataProvider([
 	    		'allModels' => $data,
 			]);
 			?>
-			<div class="panel panel-default">
+			<div class="panel panel-primary">
+				<div class="panel-heading">
+					<h3 class="panel-title">Nội dung đơn hàng</h3>
+				</div>
 				<div class="panel-body">
-					
-				
 			<?php
 	    	echo GridView::widget([
 		        'dataProvider' => $dataProvider,
@@ -110,7 +88,7 @@ $this->params['breadcrumbs'][] = $this->title;
 		            [
 		            	'class' => 'yii\grid\SerialColumn',
             			'header' => 'STT',
-            			'options' => [
+            			'headerOptions' => [
             				'width' => '50px',
             			],
 		            ],
@@ -131,6 +109,7 @@ $this->params['breadcrumbs'][] = $this->title;
 		        		'label' => 'Số lượng',
 		        		'headerOptions' => [
 		        			'style' => 'text-align:center',
+		        			'width' => '50px',
 		        		],
 		        	],
 		            [
@@ -138,6 +117,7 @@ $this->params['breadcrumbs'][] = $this->title;
 		        		'label' => 'Đơn giá',
 		        		'headerOptions' => [
 		        			'style' => 'text-align:center',
+		        			'width' => '100px',
 		        		],
 		        	],
 		            [
@@ -145,6 +125,7 @@ $this->params['breadcrumbs'][] = $this->title;
 		        		'label' => 'Tiến độ',
 		        		'headerOptions' => [
 		        			'style' => 'text-align:center',
+		        			'width' => '100px',
 		        		],
 		        		'contentOptions' => [
 		        			'style' => 'text-align:center',
@@ -222,7 +203,6 @@ $this->params['breadcrumbs'][] = $this->title;
 	            	'tabindex' => false,
 	            ],
 	        ]);
-
 	    ?>
 
 	    <?php 
@@ -255,17 +235,20 @@ $this->params['breadcrumbs'][] = $this->title;
 	     ?>
     
 	    <?= $form->field($modelDetail, 'soluong')->textInput() ?>
-
+		
 	    <?= $form->field($modelDetail, 'tiendo')->textInput()->widget(DatePicker::classname(),[
 	        'options' => ['placeholder' => 'Nhập tiến độ'],
 	        'pluginOptions' => [
 	            'autoclose' => true,
+<<<<<<< HEAD
 	            'format' => 'yyyy-mm-dd',
+=======
+	            'format' => 'dd-mm-yyyy',
+	            'todayHighlight' => true,
+>>>>>>> 363bd637cbb618b2210d54ca052b4ac00d9dced4
 	        ],
 	    ]) ?>
-
-	    <?= $form->field($modelDetail, 'giaban')->hiddenInput()->label('') ?>
-		
+		<input type="hidden" name="row_id" id="hidden_row_id" />
 	    <?php
 	    	echo Html::button('Thêm mới',['class'=>'btn btn-success','id'=>'save-modal']);
 	        Modal::end();

@@ -8,6 +8,7 @@ use frontend\models\DonhangchitietSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\base\Model;
 
 /**
  * DonhangchitietController implements the CRUD actions for Donhangchitiet model.
@@ -63,14 +64,27 @@ class DonhangchitietController extends Controller
      */
     public function actionCreate()
     {
-        $model = new Donhangchitiet();
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        // echo '<pre>';
+        // var_dump(Yii::$app->request->post());
+        // die;
+        $count = 3;
+        $models = [new Donhangchitiet()];
+        for($i = 1; $i < $count; $i++){
+            $models[] = new Donhangchitiet();
         }
+        if(Model::loadMultiple($models,Yii::$app->request->post()) && Model::validateMultiple($models)){
+            foreach ($models as $model) {
+                $model->save(false);
+            }
+            return $this->redirect('index');
+        }   
+        // $model = new Donhangchitiet();
+        // if ($model->load(Yii::$app->request->post()) && $model->save()){
+            // return $this->redirect(['view', 'id' => $model->id]);
+        // }
 
         return $this->render('create', [
-            'model' => $model,
+            'models' => $models,
         ]);
     }
 
