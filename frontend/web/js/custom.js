@@ -1,44 +1,18 @@
 $(function(){
-	// count = 0;
+	count = 0;
 	var base_url = window.location.origin;
 
 	$('#modalButton').click(function (){
 		$('#modal').modal('show');
+		$('#donhangchitiet-idsanpham > option:last').attr('value','');
+		$('#donhangchitiet-idsanpham > option:last').html('');
+		$('#donhangchitiet-soluong').val('');
+		$('#donhangchitiet-tiendo').val('');
 	});
 
 	$('#save-modal').click(function(){
-		
-<<<<<<< HEAD
-<<<<<<< HEAD
-		var elements = $('tbody>tr[data-key]');
-		var element = $('tbody>tr[data-key]:last').clone();
-		// 
-		element.attr('data-key', elements.length);
-		element.attr('id', 'stt_'+elements.length);
-
-		//Tạo STT mới
-		var stt = parseInt(element.children('[data-col-seq]:first').html());
-		stt++;
-		element.children('[data-col-seq]:first').html(stt);
-
-		//Giá trị tên sản phẩm trong modal
-		var idsanpham = $('#donhangchitiet-idsanpham > option:last').attr('value');
-		var tensanpham = $('#donhangchitiet-idsanpham').val();
-		// console.log(idsanpham);
-		console.log(tensanpham);
-		// console.log(element.children('td[data-col-seq="1"]').html());
-		element.children('[data-col-seq="1"] input').attr('value', idsanpham);
-		element.children('[data-col-seq="2"]').text(tensanpham);
-
-		// Giá trị số lượng trong modal
-		var soluong = $("#donhangchitiet-soluong").val();
-		element.children('[data-col-seq="3"]').text(soluong);
-
-		$('tbody').append(element);
-=======
-=======
->>>>>>> 9225bbeae9abd06f9362dea6cfa687aac0ae15d0
-		//Tabular kartik
+		count ++;
+		//Tabular form kartik
 		// Clone dòng cuối cùng của 
 		// var element = $('tbody>tr[data-key]:last').clone();
 		// // 
@@ -68,29 +42,59 @@ $(function(){
 		if ($('tbody tr td div').hasClass('empty')) {
 			$('tbody').html('');
 		}
+		var gia;
+		//Giá trị tên sản phẩm trong modal
+		var idsanpham = $('#donhangchitiet-idsanpham > option:last').attr('value');
+		var tensanpham = $('#donhangchitiet-idsanpham > option:last').html();
+		var soluong = $('#donhangchitiet-soluong').val();
+		var tiendo = $('#donhangchitiet-tiendo').val();
 
-		$('tbody').append(
-			"<tr data-key="0"> \
-				<td>1</td> \
-				<td data-col-seq="2">Đèn Halumos 150W</td> \
-				<td data-col-seq="3">20</td> \
-				<td data-col-seq="4">1500000</td> \
-				<td style="text-align:center" data-col-seq="5">2018-09-15</td> \
-				<td style="text-align:center">\
-					<a href="javascript:void()"><span class="glyphicon glyphicon-user"></span></a>\
-					<a href="/hapulico/donhang/delete?id=0" title="Delete" aria-label="Delete" data-pjax="0" data-confirm="Are you sure you want to delete this item?" data-method="post"><span class="glyphicon glyphicon-trash"></span></a>\
-				</td>\
-			</tr>"
-		)
-		// $('tbody').append(element);
-<<<<<<< HEAD
->>>>>>> 9225bbeae9abd06f9362dea6cfa687aac0ae15d0
-=======
->>>>>>> 9225bbeae9abd06f9362dea6cfa687aac0ae15d0
+		output = '<tr data-key="0" id="row_'+count+'">';
+		output += '<td>'+count+'</td>';
+		output += '<td data-col-seq="1" id="tensanpham_"'+count+'><input type="hidden" name="row_id" id="hidden_row_id_'+count+'" value="'+idsanpham+'"/>'+tensanpham+'</td>';
+		output += '<td data-col-seq="2" id="soluong_'+count+'">'+soluong+'</td>';
+		output += '<td data-col-seq="3" id="gia_'+count+'">'+gia+'</td>';
+		output += '<td style="text-align:center" data-col-seq="5" id="tiendo_'+count+'">'+tiendo+'</td>';
+		output += '<td><button type="button" name="view_details" class="btn btn-warning btn-xs view_details" id="'+count+'">View</button>'+' ';
+		output += '<button type="button" name="remove_details" class="btn btn-danger btn-xs remove_details" id="'+count+'">Remove</button></td>';
+		output += '</tr>';
 
+		$('tbody').append(output);
+		$.ajax({
+			type: "GET",
+			url: base_url+"/hapulico/banggia/getprice",
+			data: {
+				id: idsanpham,
+			},
+			success: function(result){
+				$('#gia_'+count).html(Number(result));
+			},
+			dataType: 'text',
+		});
 		$('#modal').modal('hide');
 	});
 
+	$(document).on('click', '.view_details', function(){
+		var row_id = $(this).attr('id');
+		$('#modal').modal('show');
+		$('#donhangchitiet-idsanpham > option:last').attr('value',$('#hidden_row_id').attr('value'));
+		$('#donhangchitiet-idsanpham > option:last').html($(''));
+		$('#donhangchitiet-soluong').val($('#soluong_'+row_id+'').html());
+		$('#donhangchitiet-tiendo').val($('#tiendo_'+row_id+'').html());
+	});
+
+	$(document).on('click', '.remove_details', function(){
+		var row_id = $(this).attr("id");
+		if(confirm("Are you sure you want to remove this row data?"))
+		{
+			$('#row_'+row_id+'').remove();
+		}
+		else
+		{
+			return false;
+		}
+	});
 });
+
 
 

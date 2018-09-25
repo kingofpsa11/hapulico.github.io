@@ -257,9 +257,10 @@ $this->params['breadcrumbs'][] = $this->title;
 	    <?= $form->field($modelDetail, 'soluong')->textInput() ?>
 
 	    <?= $form->field($modelDetail, 'tiendo')->textInput()->widget(DatePicker::classname(),[
-	        'options' => ['placeholder' => 'Nhập ngày'],
+	        'options' => ['placeholder' => 'Nhập tiến độ'],
 	        'pluginOptions' => [
 	            'autoclose' => true,
+	            'format' => 'yyyy-mm-dd',
 	        ],
 	    ]) ?>
 
