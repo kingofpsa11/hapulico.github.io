@@ -16,11 +16,20 @@ use yii\widgets\ActiveForm;
         foreach ($models as $index => $model) {
      ?>
      <div class="row">
-    <?= $form->field($model, "[$index]idsodh")->textInput() ?>
-
-    <?= $form->field($model, "[$index]idsanpham")->textInput() ?>
-
-    <?= $form->field($model, "[$index]soluong")->textInput() ?>
+        <div class="col-md-4">
+            <?= $form->field($model, "[$index]idsodh")
+                ->textInput()
+                ->hint("Nhập tên sản phẩm")
+                ->label(""); ?>
+        </div>
+        <div class="col-md-4">
+            <?= $form->field($model, "[$index]idsanpham")->textInput()->hint("Nhập tên sản phẩm")
+                ->label(""); ?>
+        </div>
+        <div class="col-md-4">
+            <?= $form->field($model, "[$index]soluong")->textInput()->hint("Nhập tên sản phẩm")
+                ->label(""); ?>
+        </div>
     </div>
     <?php } ?>
   <!--   <?= $form->field($model, 'idsolsx')->textInput() ?>

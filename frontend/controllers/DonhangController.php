@@ -175,7 +175,10 @@ class DonhangController extends Controller
         if($model){
             $sodh = $model->sodh;
             $so = explode(".", $sodh);
-            var_dump($so);
+            $so[2] ++;
+            $so[2] = str_pad($so[2], 3, "0", STR_PAD_LEFT);
+            $sodh = $so[0].'.'.$so[1].'.'.$so[2];
+            echo $sodh;
         }
         else{
             echo '';

@@ -27,17 +27,11 @@ $this->params['breadcrumbs'][] = $this->title;
     <!-- <h1><?= Html::encode($this->title) ?></h1> -->
 
     <div class="donhang-form">
-
 	    <?php
 	        $form = ActiveForm::begin();
 	        $customer = Khachhang::find()->where(['loaikhach'=>1])->all();
 	        $customer = ArrayHelper::map($customer,'id','tenkhach');
 	    ?>
-	    <div class="row">
-	    <?php
-	        // echo Html::button('Add',['class'=>'btn btn-success pull-right','id' => 'modalButton','value'=> '/hapulico/donhang/create?iddvdh=']);
-	    ?>
-	    </div>
 		<div class="row">
 			<div class="col-lg-4">
 	        	<?= $form->field($model,'iddvdh')->dropDownList(
@@ -239,13 +233,9 @@ $this->params['breadcrumbs'][] = $this->title;
 	    <?= $form->field($modelDetail, 'tiendo')->textInput()->widget(DatePicker::classname(),[
 	        'options' => ['placeholder' => 'Nhập tiến độ'],
 	        'pluginOptions' => [
-	            'autoclose' => true,
-<<<<<<< HEAD
-	            'format' => 'yyyy-mm-dd',
-=======
+	            'autoclose' => true,	           
 	            'format' => 'dd-mm-yyyy',
 	            'todayHighlight' => true,
->>>>>>> 363bd637cbb618b2210d54ca052b4ac00d9dced4
 	        ],
 	    ]) ?>
 		<input type="hidden" name="row_id" id="hidden_row_id" />
