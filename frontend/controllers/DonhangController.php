@@ -70,6 +70,7 @@ class DonhangController extends Controller
     public function actionCreateall()
     {
         $model = new Donhang();
+<<<<<<< HEAD
         $modelDetails = [new Donhangchitiet()];
         $count = count(Yii::$app->request->post('Donhangchitiet'));
         if($count !== 0){
@@ -81,6 +82,18 @@ class DonhangController extends Controller
         // var_dump(Yii::$app->request->post('Donhang'));
         // die;
         if ($model->load(Yii::$app->request->post('Donhang'))){
+=======
+        $modelDetail = new Donhangchitiet();
+
+        if ($model->load(Yii::$app->request->post())){
+            // $model->iddvdh = (int)$model->iddvdh;
+            // echo Yii::$app->formatter->format($model->ngay,'date');
+
+            // echo $model->ngay;
+            // echo Yii::$app->formatter->asDate($model->ngay, 'dd/MM/yyyy');
+            // var_dump($model->ngay);
+            // die;
+>>>>>>> parent of 363bd63... 25/09/2018
             if ($model->save()) {
                 // return $this->redirect(['index']);
                 if(Model::loadMultiple($modeldetails,Yii::$app->request->post('Donhangchitiet')) && Model::validateMultiple($modeldetails)){
@@ -185,10 +198,9 @@ class DonhangController extends Controller
                 ->where(['iddvdh'=>$id])
                 ->orderBy(['sodh'=>SORT_DESC])
                 ->one();
+        $ngay = date('Y-m-d',time());
         if($model){
-            $sodh = $model->sodh;
-            $so = explode(".", $sodh);
-            var_dump($so);
+            echo $model->sodh."+".$ngay."+".$id;
         }
         else{
             echo '';

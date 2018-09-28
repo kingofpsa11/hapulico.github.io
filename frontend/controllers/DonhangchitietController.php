@@ -8,7 +8,6 @@ use frontend\models\DonhangchitietSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use yii\base\Model;
 
 /**
  * DonhangchitietController implements the CRUD actions for Donhangchitiet model.
@@ -64,6 +63,7 @@ class DonhangchitietController extends Controller
      */
     public function actionCreate()
     {
+<<<<<<< HEAD
         echo '<pre>';
         var_dump(Yii::$app->request->post());
         die;
@@ -81,8 +81,16 @@ class DonhangchitietController extends Controller
             }
             return $this->redirect('index');
         }
+=======
+        $model = new Donhangchitiet();
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['view', 'id' => $model->id]);
+        }
+
+>>>>>>> parent of 363bd63... 25/09/2018
         return $this->render('create', [
-            'models' => $models,
+            'model' => $model,
         ]);
     }
 
