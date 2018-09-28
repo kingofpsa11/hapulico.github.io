@@ -17,6 +17,7 @@ use yii\widgets\ActiveForm;
      ?>
 
      <div class="row">
+<<<<<<< HEAD
         <div class="col-md-4">
             <?php
             echo $form->field($model, "[$index]idsodh")->textInput(['placeholder'=>'Nhập'])->label("");
@@ -32,6 +33,13 @@ use yii\widgets\ActiveForm;
             echo $form->field($model, "[$index]soluong")->textInput()->label("");
              ?>
         </div>
+=======
+    <?= $form->field($model, "[$index]idsodh")->textInput() ?>
+
+    <?= $form->field($model, "[$index]idsanpham")->textInput() ?>
+
+    <?= $form->field($model, "[$index]soluong")->textInput() ?>
+>>>>>>> parent of edb09c1... 26/09/2018
     </div>
     <?php } ?>
  
