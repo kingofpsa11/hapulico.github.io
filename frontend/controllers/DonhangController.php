@@ -70,18 +70,31 @@ class DonhangController extends Controller
     public function actionCreateall()
     {
         $model = new Donhang();
-        $modelDetail = new Donhangchitiet();
-
-        if ($model->load(Yii::$app->request->post())){
-
+        $modelDetails = [new Donhangchitiet()];
+        $count = count(Yii::$app->request->post('Donhangchitiet'));
+        if($count !== 0){
+            for ($i=1; $i < $count ; $i++) { 
+                $modelDetails[] = new Donhangchitiet();
+            }
+        }
+        // echo "<pre>";
+        // var_dump(Yii::$app->request->post('Donhang'));
+        // die;
+        if ($model->load(Yii::$app->request->post('Donhang'))){
             if ($model->save()) {
-                return $this->redirect(['index']);
+                // return $this->redirect(['index']);
+                if(Model::loadMultiple($modeldetails,Yii::$app->request->post('Donhangchitiet')) && Model::validateMultiple($modeldetails)){
+                    foreach ($modelDetails as $modelDetail) {
+                        $modelDetail->save(false);
+                    }
+                }
+                return $this->redirect(['view','id'=>$model->id]);
             }
         }
 
         return $this->render('createall', [
             'model' => $model,
-            'modelDetail' => $modelDetail,
+            'modelDetails' => $modelDetails,
         ]);
     }
 

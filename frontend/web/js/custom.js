@@ -46,10 +46,10 @@ $(function(){
 			count = count + 1;
 			output = '<tr id="row_'+count+'" data-key="0">';
 			output += '<td data-col-seq="1">'+count+'</td>';
-			output += '<td data-col-seq="2">'+tensanpham+'<input type="hidden" id="idsanpham_'+count+'" class="idsanpham" value="'+idsanpham+'" /></td>';
-			output += '<td data-col-seq="3" style="text-align:center">'+soluong+'</td>';
-			output += '<td data-col-seq="4" style="text-align:right"></td>';
-			output += '<td data-col-seq="5" style="text-align:center">'+tiendo+'</td>';
+			output += '<td data-col-seq="2">'+tensanpham+'<input type="hidden" id="idsanpham_'+count+'" name="Donhangchitiet['+count+'][idsanpham]" class="idsanpham" value="'+idsanpham+'" /></td>';
+			output += '<td data-col-seq="3" style="text-align:center">'+soluong+'<input type="hidden" id="donhangchitiet-'+count+'-soluong" class="donhangchitiet-'+count+'-soluong" name="Donhangchitiet['+count+'][soluong]"></td>';
+			output += '<td data-col-seq="4" style="text-align:right"><input type="hidden" id="donhangchitiet-'+count+'-gia" class="donhangchitiet-'+count+'-gia" name="Donhangchitiet['+count+'][gia]"></td>';
+			output += '<td data-col-seq="5" style="text-align:center">'+tiendo+'<input type="hidden" id="donhangchitiet-'+count+'-tiendo" class="donhangchitiet-'+count+'-tiendo" name="Donhangchitiet['+count+'][tiendo]"></td>';
 			output += '<td><button type="button" class="btn btn-primary view_detail" id='+count+'>Sửa</button>';
 			output += '<button type="button" class="btn btn-danger delete_detail" id='+count+'>Xóa</button></td>';
 			output += '</tr>';
@@ -57,12 +57,12 @@ $(function(){
 		}
 		else{
 			var row_id = $('#hidden_row_id').val();
-			output = '<td data-col-seq="1">'+row_id+'</td>';
-			output += '<td data-col-seq="2">'+tensanpham+'<input type="hidden" id="idsanpham_'+row_id+'" class="idsanpham" value="'+idsanpham+'" /></td>';
-			output += '<td data-col-seq="3" style="text-align:center>'+soluong+'<input type="hidden" id="soluong_"'+row_id+'></td>';
-			output += '<td data-col-seq="4" style="text-align:right"></td>';
-			output += '<td data-col-seq="5" style="text-align:center">'+tiendo+'</td>';
-			output += '<td><button type="button" class="btn btn-primary view_detail" id='+row_id+'>Sửa</button> ';
+			output += '<td data-col-seq="1">'+row_id+'</td>';
+			output += '<td data-col-seq="2">'+tensanpham+'<input type="hidden" id="idsanpham_'+row_id+'" name="Donhangchitiet['+row_id+'][idsanpham]" class="idsanpham" value="'+idsanpham+'" /></td>';
+			output += '<td data-col-seq="3" style="text-align:center">'+soluong+'<input type="hidden" id="donhangchitiet-'+row_id+'-soluong" class="donhangchitiet-'+row_id+'-soluong" name="Donhangchitiet['+row_id+'][soluong]"></td>';
+			output += '<td data-col-seq="4" style="text-align:right"><input type="hidden" id="donhangchitiet-'+row_id+'-gia" class="donhangchitiet-'+row_id+'-gia" name="Donhangchitiet['+row_id+'][gia]"></td>';
+			output += '<td data-col-seq="5" style="text-align:center">'+tiendo+'<input type="hidden" id="donhangchitiet-'+row_id+'-tiendo" class="donhangchitiet-'+row_id+'-tiendo" name="Donhangchitiet['+row_id+'][tiendo]"></td>';
+			output += '<td><button type="button" class="btn btn-primary view_detail" id='+row_id+'>Sửa</button>';
 			output += '<button type="button" class="btn btn-danger delete_detail" id='+row_id+'>Xóa</button></td>';
 			$('#row_'+row_id+'').html(output);
 		}

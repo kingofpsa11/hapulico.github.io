@@ -60,15 +60,23 @@ $this->params['breadcrumbs'][] = $this->title;
 	    </div>
 
 	    <?php
-	    	$data = [];
+	    	$data = [
+	    		// [
+	    		// 	'idsanpham'=>'1',
+	    		// 	'tensanpham'=>'123',
+	    		// 	'soluong'=>'123',
+	    		// 	'gia'=>'123456',
+	    		// 	'tiendo'=>'2018-06-12'
+	    		// ]
+	    	];
 
-	    	if (isset($_POST['idsanpham'])){
-	    		echo $_POST['idsanpham'];
-	    	}
+	    	// if (isset($_POST['idsanpham'])){
+	    	// 	echo $_POST['idsanpham'];
+	    	// }
 	    	$dataProvider =  new \yii\data\ArrayDataProvider([
 	    		'allModels' => $data,
 			]);
-			?>
+		?>	
 			<div class="panel panel-primary">
 				<div class="panel-heading">
 					<h3 class="panel-title">Nội dung đơn hàng</h3>
@@ -86,7 +94,6 @@ $this->params['breadcrumbs'][] = $this->title;
             				'width' => '50px',
             			],
 		            ],
-
 		            [
 		            	'attribute' => 'idsanpham',
 		            	'visible' => false,
@@ -121,32 +128,22 @@ $this->params['breadcrumbs'][] = $this->title;
 		        			'style' => 'text-align:center',
 		        			'width' => '100px',
 		        		],
-		        		'contentOptions' => [
-		        			'style' => 'text-align:center',
-		        		],
 		        	],
 		            [
 		                'class' => 'yii\grid\ActionColumn',
-		                'template' => '{view}{delete}{link}',
-		                'contentOptions' => [
-		        			'style' => 'text-align:center',
-		        		],
-		                'buttons' => [
-		                    'view' => function ($url,$model){
-		                        return Html::a('<span class="glyphicon glyphicon-user"></span>','javascript:void()');
-		                    },
-
-		                ]
 		            ],
 		        ],
 		    ]); 
+
+
 	    	// echo TabularForm::widget([
 	    	// 	'dataProvider' => $dataProvider,
 	    	// 	'formName' => 'donhangForm',
 	    	// 	'attributes' => [
 	    	// 		'idsanpham' => [
-	    	// 			'type' => TabularForm::INPUT_HIDDEN,
-	    	// 			'columnOptions' => ['hidden'=>true]
+	    	// 			'label' => 'ID'
+	    	// 			'type' => TabularForm::INPUT_TEXT,
+	    	// 			'columnOptions' => ['hidden'=>false]
 	    	// 		],
 	    	// 		'tensanpham' => [
 	    	// 			'label' => 'Tên sản phẩm',
@@ -180,9 +177,9 @@ $this->params['breadcrumbs'][] = $this->title;
 	    	// 	],
 	    	// ])
 	     ?>
-	     <?php 
-	     	echo Html::button('<i class="glyphicon glyphicon-plus"></i> Thêm mới',['type'=>'button','class'=>'btn btn-success','id' => 'modalButton']).' '.Html::submitButton('<i class="glyphicon glyphicon-floppy-disk"></i> Lưu',['type'=>'button','class'=>'btn btn-primary']);
-	      ?>
+	    <?php 
+	     	echo Html::button('<i class="glyphicon glyphicon-plus"></i> Thêm mới',['type'=>'button','class'=>'btn btn-success','id' => 'modalButton']).' '.Html::button('<i class="glyphicon glyphicon-remove"></i> Xoá',['type'=>'button','class'=>'btn btn-danger']).' '.Html::submitButton('<i class="glyphicon glyphicon-floppy-disk"></i> Lưu',['type'=>'button','class'=>'btn btn-primary']);
+	    ?>
 	     </div>
 			</div>
 
@@ -200,14 +197,14 @@ $this->params['breadcrumbs'][] = $this->title;
 	    ?>
 
 	    <?php 
-        $banggia = new Banggia();
-        $banggia = $banggia->find()->all();
-        $banggia = ArrayHelper::map($banggia,'id','tensanpham');
-		$url = \yii\helpers\Url::to(['list']);
+	        $banggia = new Banggia();
+	        $banggia = $banggia->find()->all();
+	        $banggia = ArrayHelper::map($banggia,'id','tensanpham');
+			$url = \yii\helpers\Url::to(['list']);
      	?>
 
 	    <?php 
-	        echo $form->field($modelDetail, 'idsanpham')->widget(Select2::classname(), [
+	        echo Select2::widget([
 	            'options' => ['placeholder' => 'Chọn sản phẩm'],
 	            'pluginOptions' => [
 					'minimumInputLength'=>3,
@@ -223,21 +220,25 @@ $this->params['breadcrumbs'][] = $this->title;
 					'escapeMarkup' => new JsExpression('function (markup) { return markup; }'),
 					'templateResult' => new JsExpression('function(idsanpham) { return idsanpham.text; }'),
 					'templateSelection' => new JsExpression('function (idsanpham) { return idsanpham.text; }'),
-				
 	            ],
 	        ]);
-	     ?>
-    
-	    <?= $form->field($modelDetail, 'soluong')->textInput() ?>
+	    ?>
+    	<input type="text" id="donhangchitiet-soluong" name="donhangchitiet-soluong" class="donhangchitiet-soluong">
+	    <?php
+	    	// echo $form->field($modelDetails, 'soluong')->textInput()
+	    ?>
 		
-	    <?= $form->field($modelDetail, 'tiendo')->textInput()->widget(DatePicker::classname(),[
-	        'options' => ['placeholder' => 'Nhập tiến độ'],
-	        'pluginOptions' => [
-	            'autoclose' => true,	           
-	            'format' => 'dd-mm-yyyy',
-	            'todayHighlight' => true,
-	        ],
-	    ]) ?>
+	    <?php 
+		    // echo $form->field($modelDetails, 'tiendo')->textInput()->widget(DatePicker::classname(),[
+	    	DatePicker::widget([
+		        'options' => ['placeholder' => 'Nhập tiến độ'],
+		        'pluginOptions' => [
+		            'autoclose' => true,
+		            'format' => 'dd-mm-yyyy',
+		            'todayHighlight' => true,
+		        ],
+		    ])
+	    ?>
 		<input type="hidden" name="row_id" id="hidden_row_id" />
 	    <?php
 	    	echo Html::button('Thêm mới',['class'=>'btn btn-success','id'=>'save-modal']);
