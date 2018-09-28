@@ -75,25 +75,6 @@ $this->params['breadcrumbs'][] = $this->title;
 
 	    <?php
 	    	$data = [
-<<<<<<< HEAD
-	    		// [
-	    		// 	'idsanpham'=>'1',
-	    		// 	'tensanpham'=>'123',
-	    		// 	'soluong'=>'123',
-	    		// 	'gia'=>'123456',
-	    		// 	'tiendo'=>'2018-06-12'
-	    		// ]
-	    	];
-
-	    	$dataProvider =  new \yii\data\ArrayDataProvider([
-	    		'allModels' => $data,
-			]);
-		?>	
-			<div class="panel panel-primary">
-				<div class="panel-heading">
-					<h3 class="panel-title">Nội dung đơn hàng</h3>
-				</div>
-=======
 		    			// [
 	        //                 'idsanpham' => '12397',
 	        //                 'tensanpham'=>'Đèn Halumos 150W',
@@ -109,15 +90,12 @@ $this->params['breadcrumbs'][] = $this->title;
 	        //                 'tiendo' => '2018-09-15'
 	        //             ],
 	    	];
-	    	if (isset($_POST['idsanpham'])){
-	    		echo $_POST['idsanpham'];
-	    	}
 	    	$dataProvider =  new \yii\data\ArrayDataProvider([
 	    		'allModels' => $data,
 			]);
 			?>
+
 			<div class="panel panel-default">
->>>>>>> parent of 363bd63... 25/09/2018
 				<div class="panel-body">
 			<?php
 	    	echo GridView::widget([
@@ -236,10 +214,8 @@ $this->params['breadcrumbs'][] = $this->title;
 	        $banggia = $banggia->find()->all();
 	        $banggia = ArrayHelper::map($banggia,'id','tensanpham');
 			$url = \yii\helpers\Url::to(['list']);
-     	?>
-
-	    <?php 
-	        echo Select2::widget([
+     	
+	        echo $form->field($modelDetail, 'idsanpham')->widget(Select2::classname(),[
 	            'options' => ['placeholder' => 'Chọn sản phẩm'],
 	            'pluginOptions' => [
 					'minimumInputLength'=>3,
@@ -257,38 +233,11 @@ $this->params['breadcrumbs'][] = $this->title;
 					'templateSelection' => new JsExpression('function (idsanpham) { return idsanpham.text; }'),
 	            ],
 	        ]);
-<<<<<<< HEAD
 	    ?>
     	<!-- <input type="text" id="donhangchitiet-soluong" name="donhangchitiet-soluong" class="donhangchitiet-soluong"> -->
-	    <?php
-	    	echo $form->field($modelDetails, 'soluong')->textInput()
-	    ?>
-		
-	    <?php 
-		    // echo $form->field($modelDetails, 'tiendo')->textInput()->widget(DatePicker::classname(),[
-	    	// DatePicker::widget([
-		    //     'options' => ['placeholder' => 'Nhập tiến độ'],
-		    //     'pluginOptions' => [
-		    //         'autoclose' => true,
-		    //         'format' => 'dd-mm-yyyy',
-		    //         'todayHighlight' => true,
-		    //     ],
-		    // ]);
-	    ?>
-
-	    <?php
-	    	echo $form->field($modelDetail, 'tiendo')->textInput()->widget(DatePicker::classname(),[
-		        'options' => ['placeholder' => 'Nhập tiến độ'],
-		        'pluginOptions' => [
-		            'autoclose' => true,
-		            'format' => 'yyyy-mm-dd',
-		            'todayHighlight' => true,
-		        ],
-    		])
-	    ?>
+	    
+	    <!-- Input dùng để lưu id của row -->
 		<input type="hidden" name="row_id" id="hidden_row_id" />
-=======
-	     ?>
     
 	    <?= $form->field($modelDetail, 'soluong')->textInput() ?>
 
@@ -296,12 +245,11 @@ $this->params['breadcrumbs'][] = $this->title;
 	        'options' => ['placeholder' => 'Nhập ngày'],
 	        'pluginOptions' => [
 	            'autoclose' => true,
+	            'todayHighlight'=>true,
+	            'format'=>'yyyy-mm-dd',
 	        ],
 	    ]) ?>
-
-	    <?= $form->field($modelDetail, 'giaban')->hiddenInput()->label('') ?>
 		
->>>>>>> parent of 363bd63... 25/09/2018
 	    <?php
 	    	echo Html::button('Thêm mới',['class'=>'btn btn-success','id'=>'save-modal']);
 	        Modal::end();

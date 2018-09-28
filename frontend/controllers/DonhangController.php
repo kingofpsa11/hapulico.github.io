@@ -70,19 +70,19 @@ class DonhangController extends Controller
     public function actionCreateall()
     {
         $model = new Donhang();
-<<<<<<< HEAD
-        $modelDetails = [new Donhangchitiet()];
-        $count = count(Yii::$app->request->post('Donhangchitiet'));
-        if($count !== 0){
-            for ($i=1; $i < $count ; $i++) { 
-                $modelDetails[] = new Donhangchitiet();
-            }
-        }
-        // echo "<pre>";
-        // var_dump(Yii::$app->request->post('Donhang'));
-        // die;
-        if ($model->load(Yii::$app->request->post('Donhang'))){
-=======
+
+        // $modelDetails = [new Donhangchitiet()];
+        // $count = count(Yii::$app->request->post('Donhangchitiet'));
+        // if($count !== 0){
+        //     for ($i=1; $i < $count ; $i++) { 
+        //         $modelDetails[] = new Donhangchitiet();
+        //     }
+        // }
+        // // echo "<pre>";
+        // // var_dump(Yii::$app->request->post('Donhang'));
+        // // die;
+        // if ($model->load(Yii::$app->request->post('Donhang'))){
+
         $modelDetail = new Donhangchitiet();
 
         if ($model->load(Yii::$app->request->post())){
@@ -93,21 +93,20 @@ class DonhangController extends Controller
             // echo Yii::$app->formatter->asDate($model->ngay, 'dd/MM/yyyy');
             // var_dump($model->ngay);
             // die;
->>>>>>> parent of 363bd63... 25/09/2018
             if ($model->save()) {
-                // return $this->redirect(['index']);
-                if(Model::loadMultiple($modeldetails,Yii::$app->request->post('Donhangchitiet')) && Model::validateMultiple($modeldetails)){
-                    foreach ($modelDetails as $modelDetail) {
-                        $modelDetail->save(false);
-                    }
-                }
-                return $this->redirect(['view','id'=>$model->id]);
+                return $this->redirect(['index']);
+                // if(Model::loadMultiple($modeldetails,Yii::$app->request->post('Donhangchitiet')) && Model::validateMultiple($modeldetails)){
+                //     foreach ($modelDetails as $modelDetail) {
+                //         $modelDetail->save(false);
+                //     }
+                // }
+                // return $this->redirect(['view','id'=>$model->id]);
             }
         }
 
         return $this->render('createall', [
             'model' => $model,
-            'modelDetails' => $modelDetails,
+            'modelDetail' => $modelDetail,
         ]);
     }
 
