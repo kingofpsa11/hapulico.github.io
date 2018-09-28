@@ -76,9 +76,6 @@ $this->params['breadcrumbs'][] = $this->title;
 	    		// ]
 	    	];
 
-	    	// if (isset($_POST['idsanpham'])){
-	    	// 	echo $_POST['idsanpham'];
-	    	// }
 	    	$dataProvider =  new \yii\data\ArrayDataProvider([
 	    		'allModels' => $data,
 			]);
@@ -229,37 +226,33 @@ $this->params['breadcrumbs'][] = $this->title;
 	            ],
 	        ]);
 	    ?>
-    	<input type="text" id="donhangchitiet-soluong" name="donhangchitiet-soluong" class="donhangchitiet-soluong">
+    	<!-- <input type="text" id="donhangchitiet-soluong" name="donhangchitiet-soluong" class="donhangchitiet-soluong"> -->
 	    <?php
-	    	// echo $form->field($modelDetails, 'soluong')->textInput()
+	    	echo $form->field($modelDetails, 'soluong')->textInput()
 	    ?>
 		
-<<<<<<< HEAD
 	    <?php 
 		    // echo $form->field($modelDetails, 'tiendo')->textInput()->widget(DatePicker::classname(),[
-	    	DatePicker::widget([
+	    	// DatePicker::widget([
+		    //     'options' => ['placeholder' => 'Nhập tiến độ'],
+		    //     'pluginOptions' => [
+		    //         'autoclose' => true,
+		    //         'format' => 'dd-mm-yyyy',
+		    //         'todayHighlight' => true,
+		    //     ],
+		    // ]);
+	    ?>
+
+	    <?php
+	    	echo $form->field($modelDetail, 'tiendo')->textInput()->widget(DatePicker::classname(),[
 		        'options' => ['placeholder' => 'Nhập tiến độ'],
 		        'pluginOptions' => [
 		            'autoclose' => true,
-		            'format' => 'dd-mm-yyyy',
+		            'format' => 'yyyy-mm-dd',
 		            'todayHighlight' => true,
 		        ],
-		    ])
+    		])
 	    ?>
-=======
-	    <?= $form->field($modelDetail, 'tiendo')->textInput()->widget(DatePicker::classname(),[
-	        'options' => ['placeholder' => 'Nhập tiến độ'],
-	        'pluginOptions' => [
-	            'autoclose' => true,
-<<<<<<< HEAD
-	            'format' => 'yyyy-mm-dd',
-=======
-	            'format' => 'dd-mm-yyyy',
-	            'todayHighlight' => true,
->>>>>>> 363bd637cbb618b2210d54ca052b4ac00d9dced4
-	        ],
-	    ]) ?>
->>>>>>> parent of edb09c1... 26/09/2018
 		<input type="hidden" name="row_id" id="hidden_row_id" />
 	    <?php
 	    	echo Html::button('Thêm mới',['class'=>'btn btn-success','id'=>'save-modal']);
