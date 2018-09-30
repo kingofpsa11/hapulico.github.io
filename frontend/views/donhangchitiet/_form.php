@@ -11,43 +11,37 @@ use yii\widgets\ActiveForm;
 <div class="donhangchitiet-form">
 
     <?php $form = ActiveForm::begin(); ?>
-
-<<<<<<< HEAD
-        foreach ($models as $index => $model) {
+    <?php
+        // foreach ($models as $index => $model) {
      ?>
 
      <div class="row">
-<<<<<<< HEAD
+
         <div class="col-md-4">
             <?php
-            echo $form->field($model, "[$index]idsodh")->textInput(['placeholder'=>'Nhập'])->label("");
+            // echo $form->field($model, "[$index]idsodh")->textInput(['placeholder'=>'Nhập'])->label("");
              ?>
         </div>
         <div class="col-md-4">
             <?php
-            echo $form->field($model, "[$index]idsanpham")->textInput()->label("");
+            // echo $form->field($model, "[$index]idsanpham")->textInput()->label("");
              ?>
         </div>
         <div class="col-md-4">
             <?php 
-            echo $form->field($model, "[$index]soluong")->textInput()->label("");
+            // echo $form->field($model, "[$index]soluong")->textInput()->label("");
              ?>
         </div>
-=======
-    <?= $form->field($model, "[$index]idsodh")->textInput() ?>
-=======
+
     <?= $form->field($model, 'idsodh')->textInput() ?>
->>>>>>> parent of 363bd63... 25/09/2018
+
 
     <?= $form->field($model, 'idsanpham')->textInput() ?>
 
-<<<<<<< HEAD
-    <?= $form->field($model, "[$index]soluong")->textInput() ?>
->>>>>>> parent of edb09c1... 26/09/2018
     </div>
-    <?php } ?>
+    <?php 
+     ?>
  
-=======
     <?= $form->field($model, 'soluong')->textInput() ?>
 
     <?= $form->field($model, 'idsolsx')->textInput() ?>
@@ -73,7 +67,6 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'ngaysua')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'iduser')->textInput() ?>
->>>>>>> parent of 363bd63... 25/09/2018
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>

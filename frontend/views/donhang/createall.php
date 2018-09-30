@@ -14,6 +14,7 @@ use frontend\models\Banggia;
 use kartik\select2\Select2;
 use yii\web\JsExpression;
 use kartik\date\DatePicker;
+use yii\web\View;
 
 /* @var $this yii\web\View */
 /* @var $model frontend\models\Donhang */
@@ -46,11 +47,7 @@ $this->params['breadcrumbs'][] = $this->title;
 	        			'prompt' => 'Lựa chọn khách hàng',
 	        			'onchange'=>'
                 			$.post("lists?id="+$(this).val(), function(data) {
-                			var value = data.split("+");
-                			$( "#donhang-sodh" ).attr("value",value[0]);
-                			$("#modalButton").each(function(){
-                				$(this).attr("value","/hapulico/donhang/create?iddvdh="+value[2]);
-                			});
+                			$( "#donhang-sodh" ).val(data);
                 		});'
 	        		]
 	        	);?>
@@ -215,40 +212,82 @@ $this->params['breadcrumbs'][] = $this->title;
 	        $banggia = ArrayHelper::map($banggia,'id','tensanpham');
 			$url = \yii\helpers\Url::to(['list']);
      	
-	        echo $form->field($modelDetail, 'idsanpham')->widget(Select2::classname(),[
-	            'options' => ['placeholder' => 'Chọn sản phẩm'],
-	            'pluginOptions' => [
-					'minimumInputLength'=>3,
-	                'allowClear' => true,
-					'language' => [
-						'errorLoading' => new JsExpression("function(){return 'Chờ kết quả';}"),
-					],
-					'ajax' => [
-						'url' => $url,
-						'dataType' => 'json',
-						'data' => new JsExpression('function(params){return {q:params.term};}'),
-					],
-					'escapeMarkup' => new JsExpression('function (markup) { return markup; }'),
-					'templateResult' => new JsExpression('function(idsanpham) { return idsanpham.text; }'),
-					'templateSelection' => new JsExpression('function (idsanpham) { return idsanpham.text; }'),
-	            ],
-	        ]);
+	    //     echo $form->field($modelDetails[0], 'idsanpham')->widget(Select2::classname(),[
+	    //         'options' => ['placeholder' => 'Chọn sản phẩm'],
+	    //         'pluginOptions' => [
+					// 'minimumInputLength'=>3,
+	    //             'allowClear' => true,
+					// 'language' => [
+					// 	'errorLoading' => new JsExpression("function(){return 'Chờ kết quả';}"),
+					// ],
+					// 'ajax' => [
+					// 	'url' => $url,
+					// 	'dataType' => 'json',
+					// 	'data' => new JsExpression('function(params){return {q:params.term};}'),
+					// ],
+					// 'escapeMarkup' => new JsExpression('function (markup) { return markup; }'),
+					// 'templateResult' => new JsExpression('function(idsanpham) { return idsanpham.text; }'),
+					// 'templateSelection' => new JsExpression('function (idsanpham) { return idsanpham.text; }'),
+	    //         ],
+	    //     ]);
 	    ?>
-    	<!-- <input type="text" id="donhangchitiet-soluong" name="donhangchitiet-soluong" class="donhangchitiet-soluong"> -->
-	    
-	    <!-- Input dùng để lưu id của row -->
-		<input type="hidden" name="row_id" id="hidden_row_id" />
-    
-	    <?= $form->field($modelDetail, 'soluong')->textInput() ?>
+    <div class="form-group field-donhangchitiet-soluong">
+	    <label class="control-label" for="donhangchitiet-soluong">Tên sản phẩm</label>
 
-	    <?= $form->field($modelDetail, 'tiendo')->textInput()->widget(DatePicker::classname(),[
-	        'options' => ['placeholder' => 'Nhập ngày'],
+	    <?php 
+// render your widget
+			echo Select2::widget([
+			    'name' => 'kv-repo-template',
+			    'options' => ['placeholder' => 'Nhập tên sản phẩm'],
+			    'pluginOptions' => [
+			        'allowClear' => true,
+			        'minimumInputLength' => 3,
+			        'ajax' => [
+			            'url' => $url,
+			            'dataType' => 'json',
+			            'data' => new JsExpression('function(params) { return {q:params.term, page: params.page}; }'),
+			            'cache' => true
+			        ],
+			        'escapeMarkup' => new JsExpression('function (markup) { return markup; }'),
+			        'templateResult' => new JsExpression('function(idsanpham) { return idsanpham.text; }'),
+					'templateSelection' => new JsExpression('function (idsanpham) { return idsanpham.text; }'),
+			    ],
+			]);
+	    ?>
+	</div>
+	<div class="form-group field-donhangchitiet-soluong">
+		<label class="control-label" for="donhangchitiet-soluong">Số lượng</label>
+		<input type="text" id="donhangchitiet-soluong" name="donhangchitiet-soluong" class="form-control">
+		<div class="help-block"></div>
+    </div>
+
+	    <!-- Input dùng để lưu id của row -->
+	<input type="hidden" name="row_id" id="hidden_row_id" />
+    
+	    <?php 
+	    	// echo $form->field($modelDetails[0], 'soluong')->textInput()
+	     ?>
+
+    <?php 
+    // echo $form->field($modelDetail, 'tiendo')->textInput()->widget(DatePicker::classname(),[
+    //     'options' => ['placeholder' => 'Nhập ngày'],
+    //     'pluginOptions' => [
+    //         'autoclose' => true,
+    //         'todayHighlight'=>true,
+    //         'format'=>'yyyy-mm-dd',
+    //     ],
+    // ]) 
+    	echo DatePicker::widget([
+    		'name'=>'datepicker',
+    		'id'=>'donhangchitiet-tiendo',
+    		'options' => ['placeholder' => 'Nhập ngày'],
 	        'pluginOptions' => [
 	            'autoclose' => true,
 	            'todayHighlight'=>true,
 	            'format'=>'yyyy-mm-dd',
 	        ],
-	    ]) ?>
+    	]);
+    ?>
 		
 	    <?php
 	    	echo Html::button('Thêm mới',['class'=>'btn btn-success','id'=>'save-modal']);

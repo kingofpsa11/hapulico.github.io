@@ -63,32 +63,29 @@ class DonhangchitietController extends Controller
      */
     public function actionCreate()
     {
-<<<<<<< HEAD
-        echo '<pre>';
-        var_dump(Yii::$app->request->post());
-        die;
-        // $count = count(Yii::$app->request->post('Donhangchitiet',[]));
-        $count =3;
-        $models = [new Donhangchitiet()];
-        if ($count !== 0) {
-            for($i = 1; $i < $count; $i++){
-                $models[] = new Donhangchitiet();
-            }
-        }   
-        if(Model::loadMultiple($models,Yii::$app->request->post()) && Model::validateMultiple($models)){
-            foreach ($models as $model) {
-                $model->save(false);
-            }
-            return $this->redirect('index');
-        }
-=======
+
+        // echo '<pre>';
+        // var_dump(Yii::$app->request->post());
+        // die;
+        // // $count = count(Yii::$app->request->post('Donhangchitiet',[]));
+        // $count =3;
+        // $models = [new Donhangchitiet()];
+        // if ($count !== 0) {
+        //     for($i = 1; $i < $count; $i++){
+        //         $models[] = new Donhangchitiet();
+        //     }
+        // }   
+        // if(Model::loadMultiple($models,Yii::$app->request->post()) && Model::validateMultiple($models)){
+        //     foreach ($models as $model) {
+        //         $model->save(false);
+        //     }
+        //     return $this->redirect('index');
+        // }
         $model = new Donhangchitiet();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         }
-
->>>>>>> parent of 363bd63... 25/09/2018
         return $this->render('create', [
             'model' => $model,
         ]);

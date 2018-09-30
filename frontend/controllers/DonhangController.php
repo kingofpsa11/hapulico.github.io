@@ -70,43 +70,48 @@ class DonhangController extends Controller
     public function actionCreateall()
     {
         $model = new Donhang();
+        
 
-        // $modelDetails = [new Donhangchitiet()];
+        // echo "<pre>";
+        // var_dump(Yii::$app->request->post('Donhang',[]));
+        // var_dump(Yii::$app->request->post('Donhangchitiet',[]));
+        // die;
+
+
+        $modelDetails = [new Donhangchitiet()];
         // $count = count(Yii::$app->request->post('Donhangchitiet'));
-        // if($count !== 0){
-        //     for ($i=1; $i < $count ; $i++) { 
-        //         $modelDetails[] = new Donhangchitiet();
-        //     }
-        // }
+        $count = 1;
+        if($count !== 0){
+            for ($i=1; $i <= $count ; $i++) { 
+                $modelDetails[] = new Donhangchitiet();
+            }
+        }
         // // echo "<pre>";
         // // var_dump(Yii::$app->request->post('Donhang'));
         // // die;
-        // if ($model->load(Yii::$app->request->post('Donhang'))){
 
-        $modelDetail = new Donhangchitiet();
+        // $modelDetail = new Donhangchitiet();
 
         if ($model->load(Yii::$app->request->post())){
             // $model->iddvdh = (int)$model->iddvdh;
-            // echo Yii::$app->formatter->format($model->ngay,'date');
 
             // echo $model->ngay;
             // echo Yii::$app->formatter->asDate($model->ngay, 'dd/MM/yyyy');
             // var_dump($model->ngay);
             // die;
             if ($model->save()) {
-                return $this->redirect(['index']);
-                // if(Model::loadMultiple($modeldetails,Yii::$app->request->post('Donhangchitiet')) && Model::validateMultiple($modeldetails)){
-                //     foreach ($modelDetails as $modelDetail) {
-                //         $modelDetail->save(false);
-                //     }
-                // }
-                // return $this->redirect(['view','id'=>$model->id]);
+                // return $this->redirect(['index']);
+                if(Model::loadMultiple($modeldetails,Yii::$app->request->post('Donhangchitiet')) && Model::validateMultiple($modeldetails)){
+                    foreach ($modelDetails as $modelDetail) {
+                        $modelDetail->save(false);
+                    }
+                }
+                return $this->redirect(['view','id'=>$model->id]);
             }
         }
 
         return $this->render('createall', [
             'model' => $model,
-            'modelDetail' => $modelDetail,
         ]);
     }
 
@@ -197,9 +202,13 @@ class DonhangController extends Controller
                 ->where(['iddvdh'=>$id])
                 ->orderBy(['sodh'=>SORT_DESC])
                 ->one();
-        $ngay = date('Y-m-d',time());
         if($model){
-            echo $model->sodh."+".$ngay."+".$id;
+            $sodh = $model->sodh;
+            $so = explode(".", $sodh);
+            $so[2] ++;
+            $so[2] = str_pad($so[2], 3, "0", STR_PAD_LEFT);
+            $sodh = $so[0].'.'.$so[1].'.'.$so[2];
+            echo $sodh;
         }
         else{
             echo '';
