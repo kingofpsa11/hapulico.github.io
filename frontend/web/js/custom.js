@@ -100,7 +100,18 @@ $(function(){
 			return false;
 		}
 	});
+
+	$('#submitButton').click(function(event) {
+		console.log($('tr [id="row_1"]').length);
+		
+		if($('#donhang-sodh').val() == ''){
+			event.preventDefault();
+			console.log('1');
+		}
+		else if($('tr [id="row_1"]').length == 0){
+			event.preventDefault();
+			console.log('123');
+		}
+	});
+
 });
-
-
-

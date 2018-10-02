@@ -13,7 +13,7 @@ return [
     'bootstrap' => ['log'],
     'modules' => [
         'gridview' =>  [
-        'class' => '\kartik\grid\Module',
+            'class' => '\kartik\grid\Module',
         ],
     ],
     'components' => [

@@ -5,10 +5,10 @@ namespace frontend\controllers;
 use Yii;
 use frontend\models\Dulieuduan;
 use frontend\models\DulieuduanSearch;
-use frontend\models\Provincial;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use frontend\models\Provincial;
 use yii\helpers\ArrayHelper;
 
 /**
@@ -67,10 +67,8 @@ class DulieuduanController extends Controller
     public function actionCreate()
     {
         $model = new Dulieuduan();
-        // $model->created_at=time();
-        $model->nguoitao = Yii::$app->user->identity->id;
         $provincial = new Provincial();
-        $provincial=$provincial->find()->asArray()->orderBy('type')->all();
+        $provincial = $provincial->find()->asArray()->all();
         $provincial = ArrayHelper::map($provincial,'id_provincial','name');
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);

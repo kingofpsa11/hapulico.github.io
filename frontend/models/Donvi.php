@@ -1,11 +1,11 @@
 <?php
 
-namespace backend\models;
+namespace frontend\models;
 
 use Yii;
 
 /**
- * This is the model class for table "donvi".
+ * This is the model class for table "tbl_donvi".
  *
  * @property int $id
  * @property string $donvi
@@ -39,8 +39,8 @@ class Donvi extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'donvi' => 'Đơn vị',
-            'tenviettat' => 'Tên viết tắt',
+            'donvi' => 'Donvi',
+            'tenviettat' => 'Tenviettat',
         ];
     }
 }

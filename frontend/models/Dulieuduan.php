@@ -52,7 +52,7 @@ class Dulieuduan extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'iddv' => 'Iddv',
+            'iddv' => 'Đơn vị',
             'customer' => 'Khách hàng',
             'phone' => 'Số điện thoại',
             'email' => 'Email',
@@ -62,9 +62,9 @@ class Dulieuduan extends \yii\db\ActiveRecord
             'quatity' => 'Số lượng',
             'price' => 'Đơn giá',
             'status' => 'Status',
-            'nguoitao' => 'Nguoitao',
-            'created_at' => 'Created At',
-            'updated_at' => 'Updated At',
+            'nguoitao' => 'Người tạo',
+            'created_at' => 'Ngày tạo',
+            'updated_at' => 'Ngày sửa',
         ];
     }
 }

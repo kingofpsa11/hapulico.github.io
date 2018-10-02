@@ -70,35 +70,21 @@ class DonhangController extends Controller
     public function actionCreateall()
     {
         $model = new Donhang();
-        
+        $modelDetails = [new Donhangchitiet()];
 
         // echo "<pre>";
-        // var_dump(Yii::$app->request->post('Donhang',[]));
         // var_dump(Yii::$app->request->post('Donhangchitiet',[]));
         // die;
 
-
-        $modelDetails = [new Donhangchitiet()];
-        // $count = count(Yii::$app->request->post('Donhangchitiet'));
-        $count = 1;
-        if($count !== 0){
+        if (Yii::$app->request->post('Donhangchitiet') !== null){
+            $count = count(Yii::$app->request->post('Donhangchitiet'));
             for ($i=1; $i <= $count ; $i++) { 
                 $modelDetails[] = new Donhangchitiet();
             }
         }
-        // // echo "<pre>";
-        // // var_dump(Yii::$app->request->post('Donhang'));
-        // // die;
 
-        // $modelDetail = new Donhangchitiet();
 
         if ($model->load(Yii::$app->request->post())){
-            // $model->iddvdh = (int)$model->iddvdh;
-
-            // echo $model->ngay;
-            // echo Yii::$app->formatter->asDate($model->ngay, 'dd/MM/yyyy');
-            // var_dump($model->ngay);
-            // die;
             if ($model->save()) {
                 // return $this->redirect(['index']);
                 if(Model::loadMultiple($modeldetails,Yii::$app->request->post('Donhangchitiet')) && Model::validateMultiple($modeldetails)){

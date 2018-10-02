@@ -18,7 +18,7 @@ class DulieuduanSearch extends Dulieuduan
     public function rules()
     {
         return [
-            [['id', 'iddv', 'provincial', 'quatity', 'price', 'status', 'nguoitao'], 'integer'],
+            [['id', 'iddv', 'provincial', 'quatity', 'price', 'status', 'nguoitao', 'nguoisua'], 'integer'],
             [['customer', 'phone', 'email', 'project', 'product', 'created_at', 'updated_at'], 'safe'],
         ];
     }
@@ -68,6 +68,7 @@ class DulieuduanSearch extends Dulieuduan
             'nguoitao' => $this->nguoitao,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
+            'nguoisua' => $this->nguoisua,
         ]);
 
         $query->andFilterWhere(['like', 'customer', $this->customer])

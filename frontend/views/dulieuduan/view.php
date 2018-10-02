@@ -42,6 +42,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'nguoitao',
             'created_at',
             'updated_at',
+            'nguoisua',
         ],
     ]) ?>
 
