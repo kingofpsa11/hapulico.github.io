@@ -2,12 +2,13 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
+use yii\widgets\Pjax;
 
 /* @var $this yii\web\View */
 /* @var $searchModel frontend\models\DonhangSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Donhangs';
+$this->title = 'Danh mục đơn hàng';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="donhang-index">
@@ -19,45 +20,44 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= Html::a('Tạo đơn hàng mới', ['createall'], ['class' => 'btn btn-success']) ?>
     </p>
 
-    <?php
-        $data = [
-                    [
-                        'id' => '1',
-                        'iddvdh'=>'123456',
-                        'sodh' => 'BHPL.18.105',
-                        'ngay' => '2018-12-30',
-                    ],
-                    [
-                        'id' => '1',
-                        'iddvdh'=>'123456',
-                        'sodh' => 'BHPL.18.105',
-                        'ngay' => '2018-12-30',
-                    ],
-                ];
-
-        $dataProvider =  new \yii\data\ArrayDataProvider([
-            'allModels' => $data,
-        ]);
-            
+    <?php 
+    Pjax::begin();
     echo GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'iddvdh',
-            'sodh',
-            'ngay',
-
+            [
+                'attribute' => 'dvdh_id',
+                'value' => 'congtycon.tenviettat',
+                'contentOptions' => [
+                    'style' => 'text-align:center',
+                ],
+            ],
+            [
+                'attribute' => 'sodh',
+                'contentOptions' => [
+                    'style' => 'text-align:center',
+                ],
+            ],
+            [
+                'attribute' => 'ngay',
+                'contentOptions' => [
+                    'style' => 'text-align:center',
+                ],
+            ],
             [
                 'class' => 'yii\grid\ActionColumn',
-                'template' => '{view}{delete}{link}',
-                'buttons' => [
-                    'view' => function ($url,$model){
-                        return Html::a('<span class="glyphicon glyphicon-user"></span>','javascript:void()');
-                    },
-                ]
             ],
         ],
-    ]); ?>
+        'tableOptions' => [
+            'class' => 'table table-striped table-bordered table-responsive',
+            'headerOptions' => [
+                'style' => 'text-align:center',
+            ],
+        ],
+    ]);
+    Pjax::end();
+     ?>
 </div>

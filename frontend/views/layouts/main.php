@@ -9,6 +9,7 @@ use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
 use frontend\assets\AppAsset;
 use common\widgets\Alert;
+use yii\widgets\Pjax;
 
 AppAsset::register($this);
 ?>
@@ -28,6 +29,7 @@ AppAsset::register($this);
 
 <div class="wrap">
     <?php
+    Yii::$app->name = 'Hapulico';
     NavBar::begin([
         'brandLabel' => Yii::$app->name,
         'brandUrl' => Yii::$app->homeUrl,
@@ -36,18 +38,22 @@ AppAsset::register($this);
         ],
     ]);
     $menuItems = [
-        ['label' => 'Home', 'url' => ['/site/index']],
-        ['label' => 'About', 'url' => ['/site/about']],
-        ['label' => 'Contact', 'url' => ['/site/contact']],
+        // ['label' => 'Đăng ký dự án', 'url' => ['/dulieuduan']],
+        // ['label' => 'About', 'url' => ['/site/about']],
+        // ['label' => 'Contact', 'url' => ['/site/contact']],
     ];
     if (Yii::$app->user->isGuest) {
-        $menuItems[] = ['label' => 'Signup', 'url' => ['/site/signup']];
+        
         $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
     } else {
+        if (Yii::$app->user->identity->id == 1) {
+           $menuItems[] = ['label' => 'Đăng ký thành viên', 'url' => ['/site/contact']];
+        }
+        $menuItems[] = ['label' => 'Đăng ký dự án', 'url' => ['/dulieuduan']];
         $menuItems[] = '<li>'
             . Html::beginForm(['/site/logout'], 'post')
             . Html::submitButton(
-                'Logout (' . Yii::$app->user->identity->username . ')',
+                'Đăng xuất (' . Yii::$app->user->identity->username . ')',
                 ['class' => 'btn btn-link logout']
             )
             . Html::endForm()
@@ -65,19 +71,27 @@ AppAsset::register($this);
             'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
         ]) ?>
         <?= Alert::widget() ?>
-        <?= $content ?>
+        <?php
+        Pjax::begin();
+        echo $content;
+        Pjax::end();
+        ?>
     </div>
 </div>
 
 <footer class="footer">
-    <div class="container">
+   <!--  <div class="container">
         <p class="pull-left">&copy; <?= Html::encode(Yii::$app->name) ?> <?= date('Y') ?></p>
 
         <p class="pull-right"><?= Yii::powered() ?></p>
-    </div>
+    </div> -->
 </footer>
 
-<?php $this->endBody() ?>
+<?php
+    if (class_exists('yii\debug\Module')) {
+        $this->off(\yii\web\View::EVENT_END_BODY, [\yii\debug\Module::getInstance(), 'renderToolbar']);
+    }
+    $this->endBody() ?>
 </body>
 </html>
 <?php $this->endPage() ?>

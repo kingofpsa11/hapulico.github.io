@@ -29,6 +29,7 @@ class Donvi extends \yii\db\ActiveRecord
         return [
             [['donvi', 'tenviettat'], 'required'],
             [['donvi', 'tenviettat'], 'string', 'max' => 255],
+            [['khuvuc','khachhang_id'], 'integer'],
         ];
     }
 
@@ -39,8 +40,10 @@ class Donvi extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'donvi' => 'Donvi',
-            'tenviettat' => 'Tenviettat',
+            'donvi' => 'Đơn vị',
+            'tenviettat' => 'Tên viết tắt',
+            'khuvuc' => 'Khu vực',
+            'khachhang_id' => 'ID Khách hàng',
         ];
     }
 }

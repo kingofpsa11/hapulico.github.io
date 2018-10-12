@@ -8,11 +8,13 @@ use frontend\models\DonhangSearch;
 use frontend\models\Donhangchitiet;
 use frontend\models\DonhangchitietSearch;
 use frontend\models\Banggia;
+use frontend\models\Khachhang;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\base\Model;
 use yii\db\Query;
+
 
 /**
  * DonhangController implements the CRUD actions for Donhang model.
@@ -57,8 +59,16 @@ class DonhangController extends Controller
      */
     public function actionView($id)
     {
+        $query = Donhangchitiet::find();
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+        ]);
+        $query->andFilterWhere([
+            'idsodh' => $id,
+        ]);
         return $this->render('view', [
             'model' => $this->findModel($id),
+            'dataProvider' => $dataProvider,
         ]);
     }
 
@@ -76,7 +86,7 @@ class DonhangController extends Controller
         // var_dump(Yii::$app->request->post('Donhangchitiet',[]));
         // die;
 
-        if (Yii::$app->request->post('Donhangchitiet') !== null){
+        if (Yii::$app->request->post('Donhangchitiet')){
             $count = count(Yii::$app->request->post('Donhangchitiet'));
             for ($i=1; $i <= $count ; $i++) { 
                 $modelDetails[] = new Donhangchitiet();
@@ -103,17 +113,42 @@ class DonhangController extends Controller
 
     public function actionCreate($iddvdh)
     {
-        $model = new Donhangchitiet();
-        $this->layout='mainmodal';
+        $model = new Donhang();
+        $modelDetails = [new Donhangchitiet()];
 
-        // if ($model->load(Yii::$app->request->post())) {
-        //     if ($model->save()){
-        //         return $this->render(['creatall', 'model' => $model]);
-        //     }
-        // }
+        //Lấy danh sách tỉnh thành
+        $customer = Khachhang::find()->where(['loaikhach'=>1])->all();
+        $customer = ArrayHelper::map($customer,'id','tenkhach');
+
+        //Lấy danh mục trạng thái
+        $status = Status::find()->asArray()->all();
+        $status = ArrayHelper::map($status,'id','status');
+
+        //Nếu có post thì tạo thêm các đối tượng Thongtinduan
+        if (Yii::$app->request->post('Thongtinduan')){
+            $count = count(Yii::$app->request->post('Thongtinduan'));
+            for ($i=1; $i < $count ; $i++) {
+                $modelDetails[] = new Thongtinduan();
+            }
+        }
+
+        if ($model->load(Yii::$app->request->post())){
+            if ($model->save()) {
+                if(Model::loadMultiple($modelDetails,Yii::$app->request->post()) && Model::validateMultiple($modelDetails)){
+                    foreach ($modelDetails as $modelDetail) {
+                        $modelDetail->idduan = $model->id;
+                        $modelDetail->save(false);
+                    }
+                    return $this->redirect(['view','id'=>$model->id]);
+                }
+            }
+        }
+
         return $this->render('create', [
             'model' => $model,
-            'iddvdh'=>$iddvdh,
+            'provincial' => $provincial,
+            'modelDetails' => $modelDetails,
+            'status' => $status,
         ]);
     }
 

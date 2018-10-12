@@ -1,45 +1,44 @@
 <?php
 
-/* @var $this yii\web\View */
-/* @var $form yii\bootstrap\ActiveForm */
-/* @var $model \frontend\models\ContactForm */
-
 use yii\helpers\Html;
-use yii\bootstrap\ActiveForm;
-use yii\captcha\Captcha;
+use yii\grid\GridView;
+use yii\widgets\Pjax;
 
-$this->title = 'Contact';
+/* @var $this yii\web\View */
+/* @var $searchModel frontend\models\DulieuduanSearch */
+/* @var $dataProvider yii\data\ActiveDataProvider */
+
+$this->title = 'Danh mục người dùng';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="site-contact">
+<div class="dulieuduan-index">
+
     <h1><?= Html::encode($this->title) ?></h1>
+    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        If you have business inquiries or other questions, please fill out the following form to contact us. Thank you.
+        <?= Html::a('Đăng ký người dùng mới', ['signup'], ['class' => 'btn btn-success']) ?>
     </p>
-
-    <div class="row">
-        <div class="col-lg-5">
-            <?php $form = ActiveForm::begin(['id' => 'contact-form']); ?>
-
-                <?= $form->field($model, 'name')->textInput(['autofocus' => true]) ?>
-
-                <?= $form->field($model, 'email') ?>
-
-                <?= $form->field($model, 'subject') ?>
-
-                <?= $form->field($model, 'body')->textarea(['rows' => 6]) ?>
-
-                <?= $form->field($model, 'verifyCode')->widget(Captcha::className(), [
-                    'template' => '<div class="row"><div class="col-lg-3">{image}</div><div class="col-lg-6">{input}</div></div>',
-                ]) ?>
-
-                <div class="form-group">
-                    <?= Html::submitButton('Submit', ['class' => 'btn btn-primary', 'name' => 'contact-button']) ?>
-                </div>
-
-            <?php ActiveForm::end(); ?>
-        </div>
-    </div>
-
+    
+    <?php 
+    Pjax::begin();
+    echo GridView::widget([
+        'dataProvider' => $dataProvider,
+        'columns' => [
+            ['class' => 'yii\grid\SerialColumn'],
+            'id',
+            'username',
+            'donvi',
+            'email',
+            ['class' => 'yii\grid\ActionColumn'],
+        ],
+        'tableOptions' => [
+            'class' => 'table table-striped table-bordered table-responsive',
+            'headerOptions' => [
+                'style' => 'text-align:center',
+            ],
+        ],
+    ]);
+    Pjax::end();
+     ?>
 </div>

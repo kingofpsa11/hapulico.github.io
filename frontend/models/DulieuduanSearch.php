@@ -18,8 +18,9 @@ class DulieuduanSearch extends Dulieuduan
     public function rules()
     {
         return [
-            [['id', 'iddv', 'provincial', 'quatity', 'price', 'status', 'nguoitao', 'nguoisua'], 'integer'],
-            [['customer', 'phone', 'email', 'project', 'product', 'created_at', 'updated_at'], 'safe'],
+            [['id', 'nguoitao', 'nguoisua'], 'integer'],
+            [['provincial_id','status_id', 'iddv'],'string','max'=>255],
+            [['customer', 'phone', 'email', 'project', 'created_at', 'updated_at'], 'safe'],
         ];
     }
 
@@ -42,8 +43,16 @@ class DulieuduanSearch extends Dulieuduan
     public function search($params)
     {
         $query = Dulieuduan::find();
+        $query->leftJoin('provincial','provincial.id=dulieuduan.provincial_id');
+        $query->leftJoin('tbl_status','tbl_status.id=dulieuduan.status_id');
 
+        $donvi = Yii::$app->user->identity->donvi;
+        if($donvi == 1 ){
+            $query->leftJoin('tbl_donvi','tbl_donvi.id=dulieuduan.iddv');
+        }
+        
         // add conditions that should always apply here
+        
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -60,22 +69,25 @@ class DulieuduanSearch extends Dulieuduan
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'iddv' => $this->iddv,
-            'provincial' => $this->provincial,
-            'quatity' => $this->quatity,
-            'price' => $this->price,
-            'status' => $this->status,
             'nguoitao' => $this->nguoitao,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
             'nguoisua' => $this->nguoisua,
         ]);
+        if($donvi !== 1 ){
+            $query->andFilterWhere(['iddv' => $donvi]);
+        }
+        else{
+            $query->andFilterWhere(['like', 'tbl_donvi.tenviettat', $this->iddv]);
+        }
+
 
         $query->andFilterWhere(['like', 'customer', $this->customer])
             ->andFilterWhere(['like', 'phone', $this->phone])
             ->andFilterWhere(['like', 'email', $this->email])
             ->andFilterWhere(['like', 'project', $this->project])
-            ->andFilterWhere(['like', 'product', $this->product]);
+            ->andFilterWhere(['like', 'provincial.name', $this->provincial_id])
+            ->andFilterWhere(['like', 'tbl_status.status', $this->status_id]);
 
         return $dataProvider;
     }

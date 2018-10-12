@@ -30,6 +30,7 @@ class Provincial extends \yii\db\ActiveRecord
             [['name', 'type'], 'required'],
             [['name'], 'string', 'max' => 200],
             [['type'], 'string', 'max' => 225],
+            [['khuvuc'], 'integer'],
         ];
     }
 
@@ -39,9 +40,11 @@ class Provincial extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id_provincial' => 'Id Provincial',
+            'id' => 'Id',
             'name' => 'Name',
             'type' => 'Type',
+            'khuvuc' => 'Khu vực'
         ];
     }
+
 }

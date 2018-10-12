@@ -66,7 +66,7 @@ class BanggiaController extends Controller
     {
         $model = new Banggia();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post()) && $model->save(false)) {
             return $this->redirect(['view', 'id' => $model->id]);
         }
 

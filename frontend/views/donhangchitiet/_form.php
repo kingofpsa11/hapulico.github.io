@@ -12,37 +12,38 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
     <?php
-        // foreach ($models as $index => $model) {
+        foreach ($models as $index => $model) {
      ?>
 
      <div class="row">
 
         <div class="col-md-4">
             <?php
-            // echo $form->field($model, "[$index]idsodh")->textInput(['placeholder'=>'Nhập'])->label("");
+            echo $form->field($model, "[$index]idsodh")->textInput(['placeholder'=>'Nhập'])->label("");
              ?>
         </div>
         <div class="col-md-4">
             <?php
-            // echo $form->field($model, "[$index]idsanpham")->textInput()->label("");
+            echo $form->field($model, "[$index]idsanpham")->textInput()->label("");
              ?>
         </div>
         <div class="col-md-4">
             <?php 
-            // echo $form->field($model, "[$index]soluong")->textInput()->label("");
+            echo $form->field($model, "[$index]soluong")->textInput()->label("");
              ?>
         </div>
 
-    <?= $form->field($model, 'idsodh')->textInput() ?>
+   <!--  <?= $form->field($model, 'idsodh')->textInput() ?>
 
 
     <?= $form->field($model, 'idsanpham')->textInput() ?>
-
+ -->
     </div>
     <?php 
+}
      ?>
  
-    <?= $form->field($model, 'soluong')->textInput() ?>
+    <!-- <?= $form->field($model, 'soluong')->textInput() ?>
 
     <?= $form->field($model, 'idsolsx')->textInput() ?>
 
@@ -53,8 +54,8 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'giamua')->textInput() ?>
 
     <?= $form->field($model, 'giaban')->textInput() ?>
-
-    <?= $form->field($model, 'soluongxuat')->textInput() ?>
+ -->
+   <!--  <?= $form->field($model, 'soluongxuat')->textInput() ?>
 
     <?= $form->field($model, 'trangthai')->textInput() ?>
 
@@ -66,7 +67,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'ngaysua')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'iduser')->textInput() ?>
+    <?= $form->field($model, 'iduser')->textInput() ?> -->
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>

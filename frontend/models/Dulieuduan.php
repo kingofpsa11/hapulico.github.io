@@ -4,6 +4,7 @@ namespace frontend\models;
 
 use Yii;
 
+
 /**
  * This is the model class for table "dulieuduan".
  *
@@ -38,10 +39,11 @@ class Dulieuduan extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['iddv', 'provincial', 'quatity', 'price', 'status', 'nguoitao'], 'integer'],
-            [['customer', 'product', 'quatity', 'price','provincial'], 'required'],
+            [['iddv', 'status_id', 'nguoitao','provincial_id'], 'integer'],
+            [['customer','provincial_id','status_id'], 'required','message'=>'{attribute} không được để trống'],
             [['created_at', 'updated_at'], 'safe'],
-            [['customer', 'phone', 'email', 'project', 'product'], 'string', 'max' => 255],
+            [['customer', 'phone', 'email', 'project'], 'string', 'max' => 255],
+            ['email','email'],
         ];
     }
 
@@ -56,15 +58,27 @@ class Dulieuduan extends \yii\db\ActiveRecord
             'customer' => 'Khách hàng',
             'phone' => 'Số điện thoại',
             'email' => 'Email',
-            'provincial' => 'Tỉnh thành',
-            'project' => 'Dự án/Công trình',
-            'product' => 'Tên sản phẩm',
-            'quatity' => 'Số lượng',
-            'price' => 'Đơn giá',
-            'status' => 'Status',
+            'provincial_id' => 'Tỉnh thành',
+            'project' => 'Dự án/Công trình',            
+            'status_id' => 'Trạng thái',
             'nguoitao' => 'Người tạo',
             'created_at' => 'Ngày tạo',
             'updated_at' => 'Ngày sửa',
         ];
+    }
+
+    public function getProvincial()
+    {
+        return $this->hasOne(Provincial::className(),['id' => 'provincial_id']);
+    }
+
+    public function getStatus()
+    {
+        return $this->hasOne(Status::className(),['id' => 'status_id']);
+    }
+
+    public function getCongtycon()
+    {
+        return $this->hasOne(Donvi::className(),['id' => 'iddv']);
     }
 }

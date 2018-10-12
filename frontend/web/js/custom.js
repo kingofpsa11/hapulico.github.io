@@ -101,17 +101,97 @@ $(function(){
 		}
 	});
 
-	$('#submitButton').click(function(event) {
-		console.log($('tr [id="row_1"]').length);
+	// $('#submitButton').click(function(event) {
+	// 	console.log($('tr [id="row_1"]').length);
 		
-		if($('#donhang-sodh').val() == ''){
-			event.preventDefault();
-			console.log('1');
-		}
-		else if($('tr [id="row_1"]').length == 0){
-			event.preventDefault();
-			console.log('123');
-		}
+	// 	if($('#donhang-sodh').val() == ''){
+	// 		event.preventDefault();
+	// 		console.log('1');
+	// 	}
+	// 	else if($('tr [id="row_1"]').length == 0){
+	// 		event.preventDefault();
+	// 		console.log('123');
+	// 	}
+	// });
+
+});
+
+$(function() {
+	var thanhtien = 0;
+	$('input[id*="quantity"]').each(function(index, element) {
+		var gia = $($('input[id*="price"]')[index]).val();
+		var soluong = $(element).val();
+		thanhtien += gia*soluong;
 	});
 
+	// Chuyển đổi số thành định dạng ở Việt Nam
+	$('#giatridonhang').text(thanhtien.toString().replace(/\B(?=(\d{3})+(?!\d))/g, "."));
+
+	$(document).on('click', '#themmoi', function(event) {
+		var count = $('#w2 > table > tbody > tr').length - 1;
+		count++;
+
+		output = $('#w2 > table > tbody > tr[id="row_0"]').clone();
+		output.attr('id', 'row_'+count);
+		output.attr('data-key', count);
+
+        $('tbody').append(output);
+        $('#row_'+count+' > td[data-col-seq="0"]').text(count+1);
+
+        $('#row_'+count+' > td[data-col-seq="1"] > div').removeClass('field-thongtinduan-0-product');
+        $('#row_'+count+' > td[data-col-seq="1"] > div').addClass('field-thongtinduan-'+count+'-product');
+        $('#row_'+count+' > td[data-col-seq="1"] > div > input').attr('name','Thongtinduan['+count+'][product]');
+        $('#row_'+count+' > td[data-col-seq="1"] > div > input').attr('id','thongtinduan-'+count+'-product');
+        $('#row_'+count+' > td[data-col-seq="1"] > div > input').val('');
+
+        $('#row_'+count+' > td[data-col-seq="2"] > div').removeClass('field-thongtinduan-0-quantity');
+        $('#row_'+count+' > td[data-col-seq="2"] > div').addClass('field-thongtinduan-'+count+'-quantity');
+        $('#row_'+count+' > td[data-col-seq="2"] > div > input').attr('name','Thongtinduan['+count+'][quantity]');
+        $('#row_'+count+' > td[data-col-seq="2"] > div > input').attr('id','thongtinduan-'+count+'-quantity');
+        $('#row_'+count+' > td[data-col-seq="2"] > div > input').val('');
+
+        $('#row_'+count+' > td[data-col-seq="3"] > div').removeClass('field-thongtinduan-0-price');
+        $('#row_'+count+' > td[data-col-seq="3"] > div').addClass('field-thongtinduan-'+count+'-price');
+        $('#row_'+count+' > td[data-col-seq="3"] > div > input').attr('name','Thongtinduan['+count+'][price]');
+        $('#row_'+count+' > td[data-col-seq="3"] > div > input').attr('id','thongtinduan-'+count+'-price');
+        $('#row_'+count+' > td[data-col-seq="3"] > div > input').val('');
+        $('#row_'+count+' > td[data-col-seq="3"] > div > input').inputmask("integer",{
+                'removeMaskOnSubmit' : true,
+                'groupSeparator' : '.',
+                'autoGroup' : true,
+                'autoUnmask' : true,
+                'unmaskAsNumber' : true,
+            },
+        );
+        $('#row_'+count+' > td[data-col-seq="4"] > button').attr('id',count);
+	});
+
+	$(document).on('click', '.remove-product', function(event) {
+		row_id = $(this).attr('id');
+		if(row_id>0){
+			$('#row_'+row_id).remove();
+		}
+		else{
+			return false;
+		}
+		// if(confirm('Chắc chắn xóa dòng này?')){
+		// 	$('#row_'+row_id).remove();
+		// }
+		// else{
+		// 	return false;
+		// }
+	});
+	// Bắt sự kiện thay đổi trong input soluong và gia
+	$(document).on('keyup', 'input[id*="quantity"], input[id*="price"]', function(event) {
+		var thanhtien = 0;
+		
+		$('input[id*="quantity"]').each(function(index, element) {
+			var gia = $($('input[id*="price"]')[index]).val();
+			var soluong = $(element).val();
+			thanhtien += gia*soluong;
+		});
+
+		$('#giatridonhang').text(thanhtien.toString().replace(/\B(?=(\d{3})+(?!\d))/g, "."));
+
+	});
 });

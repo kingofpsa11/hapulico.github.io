@@ -5,10 +5,10 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model frontend\models\Dulieuduan */
 
-$this->title = 'Update Dulieuduan: ' . $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Dulieuduans', 'url' => ['index']];
+$this->title = 'Dự án ' . $model->project;
+$this->params['breadcrumbs'][] = ['label' => 'Danh mục dự án', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
-$this->params['breadcrumbs'][] = 'Update';
+$this->params['breadcrumbs'][] = 'Sửa';
 ?>
 <div class="dulieuduan-update">
 
@@ -16,6 +16,9 @@ $this->params['breadcrumbs'][] = 'Update';
 
     <?= $this->render('_form', [
         'model' => $model,
+        'provincial' => $provincial,
+		'modelDetails' => $modelDetails,
+		'status' => $status,
     ]) ?>
 
 </div>

@@ -22,7 +22,6 @@ $this->title = 'Đăng nhập';
                 <?= $form->field($model, 'username')->textInput(['autofocus' => true])->label('Tên đăng nhập') ?>
                 
                 <?= $form->field($model, 'password')->passwordInput()->label('Mật khẩu') ?>
-                <?= $form->field($model, 'donvi')->dropDownList($donvi)->label('Đơn vị') ?>
                 <?= $form->field($model, 'rememberMe')->checkbox() ?>
 
                 <div style="color:#999;margin:1em 0">

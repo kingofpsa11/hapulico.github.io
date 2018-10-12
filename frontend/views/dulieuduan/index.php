@@ -2,12 +2,13 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
+use yii\widgets\Pjax;
 
 /* @var $this yii\web\View */
 /* @var $searchModel frontend\models\DulieuduanSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Đăng ký dự án';
+$this->title = 'Danh mục dự án';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="dulieuduan-index">
@@ -16,38 +17,60 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Dự án mới', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Đăng ký dự án mới', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
-
-    <?= GridView::widget([
+    
+    <?php 
+    Pjax::begin();
+    echo GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-
-            'id',
-            'iddv',
+            [
+                'attribute' => 'iddv',
+                'value' => 'congtycon.tenviettat',
+                'visible' => (Yii::$app->user->identity->donvi == 1),
+            ],
             'customer',
             'phone',
             'email:email',
-            'provincial',
+            [
+                'attribute' => 'provincial_id',
+                'content' => function ($model){
+                        if($model->provincial->khuvuc !== $model->congtycon->khuvuc){
+                            return '<span class="label label-danger">'.$model->provincial->name.'</span>';
+                        }else{
+                            return $model->provincial->name;
+                        }
+                    }
+            ],
             'project',
-            'product',
-            'quatity',
-            'price',
-            'status',
-            // 'nguoitao',
-            // 'created_at',
-            // 'updated_at',
-            // 'nguoisua',
+            [
+                'attribute' => 'status_id',
+                'value' => 'status.status',
+            ],
 
+            // 'nguoitao',
+            [
+                'attribute' => 'created_at',
+                'format' => ['date','php:d/m/Y'],
+            ],
             ['class' => 'yii\grid\ActionColumn'],
         ],
         'tableOptions' => [
-            'class' => 'table table-striped table-bordered',
+            'class' => 'table table-striped table-bordered table-responsive',
             'headerOptions' => [
                 'style' => 'text-align:center',
-            ]
+            ],
         ],
-    ]); ?>
+        'rowOptions' => function($model, $key, $index, $grid){
+            if($model->provincial->khuvuc !== $model->congtycon->khuvuc){
+                $class = 'danger';
+                return array('key'=>$key,'index'=>$index,'class'=>$class);
+            }
+        }
+    ]);
+    Pjax::end();
+     ?>
 </div>

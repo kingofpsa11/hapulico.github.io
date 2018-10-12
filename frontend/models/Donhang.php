@@ -29,7 +29,7 @@ class Donhang extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['iddvdh'], 'integer'],
+            [['dvdh_id'], 'integer'],
             [['sodh'], 'string', 'max' => 255],
             [['id'], 'exist', 'skipOnError' => true, 'targetClass' => Donhangchitiet::className(), 'targetAttribute' => ['id' => 'idsodh']],
             [['ngay'],'safe'],
@@ -43,7 +43,7 @@ class Donhang extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'iddvdh' => 'Khách hàng',
+            'dvdh_id' => 'Khách hàng',
             'sodh' => 'Số đơn hàng',
             'ngay' => 'Ngày'
         ];
@@ -55,5 +55,19 @@ class Donhang extends \yii\db\ActiveRecord
     public function getId0()
     {
         return $this->hasOne(Donhangchitiet::className(), ['idsodh' => 'id']);
+    }
+    public function getProvincial()
+    {
+        return $this->hasOne(Provincial::className(),['id' => 'provincial_id']);
+    }
+
+    public function getStatus()
+    {
+        return $this->hasOne(Status::className(),['id' => 'status_id']);
+    }
+
+    public function getCongtycon()
+    {
+        return $this->hasOne(Donvi::className(),['khachhang_id' => 'dvdh_id']);
     }
 }

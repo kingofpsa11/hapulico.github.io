@@ -16,6 +16,8 @@ use backend\models\Contact;
 use backend\models\Donvi;
 use backend\models\Category;
 use yii\helpers\ArrayHelper;
+use common\models\User;
+use yii\data\ActiveDataProvider;
 /**
  * Site controller
  */
@@ -29,15 +31,15 @@ class SiteController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['logout', 'signup'],
+                // 'only' => ['logout', 'signup'],
                 'rules' => [
                     [
-                        'actions' => ['signup'],
+                        'actions' => ['login','error'],
                         'allow' => true,
                         'roles' => ['?'],
                     ],
                     [
-                        'actions' => ['logout'],
+                        'actions' => ['index','logout','signup','contact'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -86,23 +88,19 @@ class SiteController extends Controller
     public function actionLogin()
     {
         if (!Yii::$app->user->isGuest) {
-            return $this->goHome();
+            return $this->redirect('dulieuduan');
         }
 
-        $donvi = Donvi::find()->all();
-        $donvi = ArrayHelper::map($donvi,'id','donvi');
+
         $model = new LoginForm();
-        // echo "<pre>";
-        // print_r($donvi);
-        // die;
+
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->goBack();
+            return $this->redirect('../dulieuduan');
         } else {
             $model->password = '';
 
             return $this->render('login', [
                 'model' => $model,
-                'donvi' => $donvi,
             ]);
         }
     }
@@ -126,23 +124,12 @@ class SiteController extends Controller
      */
     public function actionContact()
     {
-        $model = new ContactForm();
-        $contact = new Contact();
-        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-            $contact->created_at = time();
-            $contact->save();
-            if ($model->sendEmail(Yii::$app->params['adminEmail'])) {
-                Yii::$app->session->setFlash('success', 'Thank you for contacting us. We will respond to you as soon as possible.');
-            } else {
-                Yii::$app->session->setFlash('error', 'There was an error sending your message.');
-            }
-
-            return $this->refresh();
-        } else {
-            return $this->render('contact', [
-                'model' => $model,
-            ]);
-        }
+        $dataProvider = new ActiveDataProvider([
+            'query' => User::find(),
+        ]);
+        return $this->render('contact', [
+            'dataProvider' => $dataProvider,
+        ]);
     }
 
     /**
@@ -161,19 +148,31 @@ class SiteController extends Controller
      * @return mixed
      */
     public function actionSignup()
-    {
-        $model = new SignupForm();
-        if ($model->load(Yii::$app->request->post())) {
-            if ($user = $model->signup()) {
-                if (Yii::$app->getUser()->login($user)) {
-                    return $this->goHome();
+    {   
+        if (Yii::$app->user->identity->id == 1){
+
+            $model = new SignupForm();
+
+            //Lấy danh mục các đơn vị
+            $donvi = new Donvi();
+            $donvi = $donvi->find()->asArray()->all();
+            $donvi = ArrayHelper::map($donvi,'id','donvi');
+
+            if ($model->load(Yii::$app->request->post())) {
+                if ($user = $model->signup()) {
+                    // if (Yii::$app->getUser()->login($user)) {
+                        return $this->redirect('contact');
+                    // }
                 }
             }
+            return $this->render('signup',[
+                'model' => $model,
+                'donvi' => $donvi,
+            ]);
         }
-
-        return $this->render('signup', [
-            'model' => $model,
-        ]);
+        else {
+            return $this->redirect('../dulieuduan');
+        }
     }
 
     /**
