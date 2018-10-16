@@ -101,19 +101,6 @@ $(function(){
 		}
 	});
 
-	// $('#submitButton').click(function(event) {
-	// 	console.log($('tr [id="row_1"]').length);
-		
-	// 	if($('#donhang-sodh').val() == ''){
-	// 		event.preventDefault();
-	// 		console.log('1');
-	// 	}
-	// 	else if($('tr [id="row_1"]').length == 0){
-	// 		event.preventDefault();
-	// 		console.log('123');
-	// 	}
-	// });
-
 });
 
 $(function() {
@@ -174,12 +161,7 @@ $(function() {
 		else{
 			return false;
 		}
-		// if(confirm('Chắc chắn xóa dòng này?')){
-		// 	$('#row_'+row_id).remove();
-		// }
-		// else{
-		// 	return false;
-		// }
+		
 	});
 	// Bắt sự kiện thay đổi trong input soluong và gia
 	$(document).on('keyup', 'input[id*="quantity"], input[id*="price"]', function(event) {
@@ -193,5 +175,25 @@ $(function() {
 
 		$('#giatridonhang').text(thanhtien.toString().replace(/\B(?=(\d{3})+(?!\d))/g, "."));
 
+	});
+});
+
+$(function() {
+	$('#donhang-dvdh_id').change(function(event) {
+		var base_url = window.location.origin;
+		console.log(base_url);
+		var id = $(this).val();
+		console.log(id);
+		$.ajax({
+			url: base_url+'/hapulico/donhang/lists',
+			type: 'GET',
+			dataType: 'json',
+			data: {id: 'id'},
+			success: function(data){
+				console.log(data);
+			}
+		})
+
+		
 	});
 });

@@ -19,7 +19,7 @@ class DonhangSearch extends Donhang
     {
         return [
             [['id'], 'integer'],
-            [['dvdh_id','sodh'],'string','max'=>255],
+            [['khachhang_id','sodh'],'string','max'=>255],
             ['ngay', 'safe'],
         ];
     }

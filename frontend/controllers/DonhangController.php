@@ -9,6 +9,7 @@ use frontend\models\Donhangchitiet;
 use frontend\models\DonhangchitietSearch;
 use frontend\models\Banggia;
 use frontend\models\Khachhang;
+use frontend\models\Donvi;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -219,10 +220,18 @@ class DonhangController extends Controller
 	
     public function actionLists($id)
     {   
+        // $donvi = Donvi::find()
+        //         ->where('khachhang_id = :khachhang_id', [':khachhang_id' => $id])
+        //         ->one();
+        // $donvi = $donvi->tenviettat;
+        
+        // $year = date('y');
+        
         $model = Donhang::find()
-                ->where(['iddvdh'=>$id])
+                ->where(['dvdh_id'=>$id])
                 ->orderBy(['sodh'=>SORT_DESC])
                 ->one();
+
         if($model){
             $sodh = $model->sodh;
             $so = explode(".", $sodh);
@@ -234,19 +243,6 @@ class DonhangController extends Controller
         else{
             echo '';
         }
-    }
-
-    public function actionLaygia($idsanpham,$soluong,$tiendo)
-    {   
-        $model = Banggia::find()->where('id = :id',[':id' => $idsanpham])->one();
-        $result = [
-            'idsanpham' => $idsanpham,
-            'soluong' => $soluong,
-            'gia' => $model->giavtcn,
-            'tiendo' => $tiendo,
-        ];
-
-        die(json_encode($result));
     }
 
     public function actionGetprice($id)

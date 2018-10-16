@@ -41,7 +41,7 @@ $this->params['breadcrumbs'][] = $this->title;
 	    </div>
 		<div class="row">
 			<div class="col-lg-4">
-	        	<?= $form->field($model,'iddvdh')->dropDownList(
+	        	<?= $form->field($model,'dvdh_id')->dropDownList(
 	        		$customer,
 	        		[
 	        			'prompt' => 'Lựa chọn khách hàng',
