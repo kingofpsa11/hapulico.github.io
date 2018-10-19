@@ -19,8 +19,8 @@ class DonhangSearch extends Donhang
     {
         return [
             [['id'], 'integer'],
-            [['khachhang_id','sodh'],'string','max'=>255],
-            ['ngay', 'safe'],
+            [['khachhang_id','sodh','solsx','nguoisua','nguoitao'],'string','max'=>255],
+            [['ngay','ngaysua'], 'safe'],
         ];
     }
 
@@ -49,7 +49,8 @@ class DonhangSearch extends Donhang
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
-        $query->leftJoin('tbl_donvi','tbl_donvi.khachhang_id=tbl_donhang.dvdh_id');
+        $query->leftJoin('tbl_donvi','tbl_donvi.khachhang_id=tbl_donhang.khachhang_id');
+
         $this->load($params);
 
         if (!$this->validate()) {
@@ -66,7 +67,8 @@ class DonhangSearch extends Donhang
 
         $query
         ->andFilterWhere(['like', 'sodh', $this->sodh])
-        ->andFilterWhere(['like', 'tbl_donvi.tenviettat', $this->dvdh_id]);
+        ->andFilterWhere(['like', 'solsx', $this->solsx])
+        ->andFilterWhere(['like', 'tbl_donvi.tenviettat', $this->khachhang_id]);
 
         return $dataProvider;
     }

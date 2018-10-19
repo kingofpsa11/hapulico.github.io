@@ -29,7 +29,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
 
             [
-                'attribute' => 'dvdh_id',
+                'attribute' => 'khachhang_id',
                 'value' => 'congtycon.tenviettat',
                 'contentOptions' => [
                     'style' => 'text-align:center',
@@ -47,6 +47,10 @@ $this->params['breadcrumbs'][] = $this->title;
                     'style' => 'text-align:center',
                 ],
             ],
+            'solsx',
+            'nguoitao',
+            'nguoisua',
+            'ngaysua',
             [
                 'class' => 'yii\grid\ActionColumn',
             ],
