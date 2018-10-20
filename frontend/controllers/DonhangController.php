@@ -220,7 +220,7 @@ class DonhangController extends Controller
     public function actionLists($id)
     {   
         $model = Donhang::find()
-                ->where(['iddvdh'=>$id])
+                ->where(['dvdh_id'=>$id])
                 ->orderBy(['sodh'=>SORT_DESC])
                 ->one();
         if($model){
