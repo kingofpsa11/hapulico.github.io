@@ -29,10 +29,11 @@ class Donhang extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['dvdh_id'], 'integer'],
+            [['sodh','khachhang_id','ngay','user_id_created','user_id_updated','created_at','updated_at'],'required'],
+            [['khachhang_id'], 'integer'],
             [['sodh'], 'string', 'max' => 255],
-            [['id'], 'exist', 'skipOnError' => true, 'targetClass' => Donhangchitiet::className(), 'targetAttribute' => ['id' => 'idsodh']],
-            [['ngay'],'safe'],
+            [['id'], 'exist', 'skipOnError' => true, 'targetClass' => Donhangchitiet::className(), 'targetAttribute' => ['id' => 'sodh_id']],
+            [['ngay','created_at','updated_at'],'safe'],
         ];
     }
 
@@ -43,7 +44,12 @@ class Donhang extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'dvdh_id' => 'Khách hàng',
+            'solsx' => 'Số lệnh sản xuất',
+            'user_id_created' => 'Người tạo',
+            'created_at' => 'Ngày tạo',
+            'user_id_updated' => 'Người sửa',
+            'updated_at' => 'Ngày sửa',
+            'khachhang_id' => 'Khách hàng',
             'sodh' => 'Số đơn hàng',
             'ngay' => 'Ngày'
         ];
@@ -54,20 +60,10 @@ class Donhang extends \yii\db\ActiveRecord
      */
     public function getId0()
     {
-        return $this->hasOne(Donhangchitiet::className(), ['idsodh' => 'id']);
+        return $this->hasOne(Donhangchitiet::className(), ['sodh_id' => 'id']);
     }
-    public function getProvincial()
-    {
-        return $this->hasOne(Provincial::className(),['id' => 'provincial_id']);
-    }
-
-    public function getStatus()
-    {
-        return $this->hasOne(Status::className(),['id' => 'status_id']);
-    }
-
     public function getCongtycon()
     {
-        return $this->hasOne(Donvi::className(),['khachhang_id' => 'dvdh_id']);
+        return $this->hasOne(Donvi::className(),['khachhang_id' => 'khachhang_id']);
     }
 }

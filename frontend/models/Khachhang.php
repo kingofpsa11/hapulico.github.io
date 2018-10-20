@@ -29,8 +29,8 @@ class Khachhang extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['loaikhach'], 'integer'],
-            [['makhach', 'tenkhach', 'tenviettat'], 'string', 'max' => 255],
+            [['loaikhach','makhach'], 'integer'],
+            [['tenkhach', 'tenviettat'], 'string', 'max' => 255],
         ];
     }
 
@@ -41,10 +41,10 @@ class Khachhang extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'makhach' => 'Makhach',
-            'tenkhach' => 'Tenkhach',
-            'tenviettat' => 'Tenviettat',
-            'loaikhach' => 'Loaikhach',
+            'makhach' => 'Mã Khách',
+            'tenkhach' => 'Tên Khách',
+            'tenviettat' => 'Tên viết tắt',
+            'loaikhach' => 'Loại khách',
         ];
     }
 }

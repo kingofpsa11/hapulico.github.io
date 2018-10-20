@@ -8,12 +8,14 @@ use frontend\models\DonhangSearch;
 use frontend\models\Donhangchitiet;
 use frontend\models\DonhangchitietSearch;
 use frontend\models\Banggia;
-use frontend\models\Khachhang;
+use frontend\models\Donvi;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\base\Model;
 use yii\db\Query;
+use yii\helpers\ArrayHelper;
+use yii\data\ActiveDataProvider;
 
 
 /**
@@ -64,7 +66,7 @@ class DonhangController extends Controller
             'query' => $query,
         ]);
         $query->andFilterWhere([
-            'idsodh' => $id,
+            'sodh_id' => $id,
         ]);
         return $this->render('view', [
             'model' => $this->findModel($id),
@@ -82,10 +84,12 @@ class DonhangController extends Controller
         $model = new Donhang();
         $modelDetails = [new Donhangchitiet()];
 
-        // echo "<pre>";
-        // var_dump(Yii::$app->request->post('Donhangchitiet',[]));
-        // die;
+        // loaikhach = 1 : lọc tên 4 đơn vị thương mại
+        // Tạo thành array $customer để chứa id và tenkhach của các đơn vị
+        $customer = Donvi::find()->all();
+        $customer = ArrayHelper::map($customer,'khachhang_id','donvi');
 
+        //Kiểm tra có bao nhiêu dòng của sản phẩm
         if (Yii::$app->request->post('Donhangchitiet')){
             $count = count(Yii::$app->request->post('Donhangchitiet'));
             for ($i=1; $i <= $count ; $i++) { 
@@ -97,7 +101,7 @@ class DonhangController extends Controller
         if ($model->load(Yii::$app->request->post())){
             if ($model->save()) {
                 // return $this->redirect(['index']);
-                if(Model::loadMultiple($modeldetails,Yii::$app->request->post('Donhangchitiet')) && Model::validateMultiple($modeldetails)){
+                if(Model::loadMultiple($modeldetails,Yii::$app->request->post()) && Model::validateMultiple($modeldetails)){
                     foreach ($modelDetails as $modelDetail) {
                         $modelDetail->save(false);
                     }
@@ -108,6 +112,8 @@ class DonhangController extends Controller
 
         return $this->render('createall', [
             'model' => $model,
+            'modelDetails' => $modelDetails,
+            'customer'=>$customer,
         ]);
     }
 
@@ -125,8 +131,8 @@ class DonhangController extends Controller
         $status = ArrayHelper::map($status,'id','status');
 
         //Nếu có post thì tạo thêm các đối tượng Thongtinduan
-        if (Yii::$app->request->post('Thongtinduan')){
-            $count = count(Yii::$app->request->post('Thongtinduan'));
+        if (Yii::$app->request->post('Donhangchitiet')){
+            $count = count(Yii::$app->request->post('Donhangchitiet'));
             for ($i=1; $i < $count ; $i++) {
                 $modelDetails[] = new Thongtinduan();
             }
@@ -149,6 +155,7 @@ class DonhangController extends Controller
             'provincial' => $provincial,
             'modelDetails' => $modelDetails,
             'status' => $status,
+            
         ]);
     }
 
@@ -219,10 +226,18 @@ class DonhangController extends Controller
 	
     public function actionLists($id)
     {   
+        // $donvi = Donvi::find()
+        //         ->where('khachhang_id = :khachhang_id', [':khachhang_id' => $id])
+        //         ->one();
+        // $donvi = $donvi->tenviettat;
+        
+        // $year = date('y');
+        
         $model = Donhang::find()
                 ->where(['dvdh_id'=>$id])
                 ->orderBy(['sodh'=>SORT_DESC])
                 ->one();
+
         if($model){
             $sodh = $model->sodh;
             $so = explode(".", $sodh);
@@ -234,19 +249,6 @@ class DonhangController extends Controller
         else{
             echo '';
         }
-    }
-
-    public function actionLaygia($idsanpham,$soluong,$tiendo)
-    {   
-        $model = Banggia::find()->where('id = :id',[':id' => $idsanpham])->one();
-        $result = [
-            'idsanpham' => $idsanpham,
-            'soluong' => $soluong,
-            'gia' => $model->giavtcn,
-            'tiendo' => $tiendo,
-        ];
-
-        die(json_encode($result));
     }
 
     public function actionGetprice($id)

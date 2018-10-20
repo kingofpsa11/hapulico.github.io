@@ -42,8 +42,8 @@ class Donhangchitiet extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['idsodh', 'idsanpham', 'soluong', 'idsolsx', 'giamua', 'giaban', 'soluongxuat', 'trangthai', 'nguoitao', 'nguoisua', 'iduser'], 'integer'],
-            [['tiendo', 'tiendothucte', 'ngaytao', 'ngaysua'], 'safe'],
+            [['sodh_id', 'sanpham_id', 'soluong', 'solsx_id', 'giamua', 'giaban', 'soluongxuat', 'trangthai', 'nguoitao', 'nguoisua', 'user_id'], 'integer'],
+            [['tiendoyeucau', 'tiendothucte', 'ngaytao', 'ngaysua'], 'safe'],
         ];
     }
 
@@ -54,10 +54,10 @@ class Donhangchitiet extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'idsodh' => 'Idsodh',
-            'idsanpham' => 'Tên sản phẩm',
+            'sodh_id' => 'Idsodh',
+            'sanpham_id' => 'Tên sản phẩm',
             'soluong' => 'Số lượng',
-            'idsolsx' => 'Idsolsx',
+            'solsx_id' => 'Idsolsx',
             'tiendo' => 'Tiến độ',
             'tiendothucte' => 'Tiến độ thực tế',
             'giamua' => 'Giamua',
@@ -68,7 +68,7 @@ class Donhangchitiet extends \yii\db\ActiveRecord
             'ngaytao' => 'Ngaytao',
             'nguoisua' => 'Nguoisua',
             'ngaysua' => 'Ngaysua',
-            'iduser' => 'Iduser',
+            'user_id' => 'Iduser',
         ];
     }
 

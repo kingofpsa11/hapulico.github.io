@@ -15,90 +15,62 @@ use yii\widgets\MaskedInput;
 <div class="donhang-form">
 
     <?php $form = ActiveForm::begin(); ?>
+    
 
-    <?= $form->field($model, 'dvdh_id')->hiddenInput(['value'=>Yii::$app->user->identity->donvi])->label(false)?>
+    <!-- Tạo 3 input để chứa: tên đơn vị đặt hàng, số đơn hàng, ngày đặt hàng -->
+    <div class="row">
+        <div class="col-lg-4">
+            <?= $form->field($model,'khachhang_id')->dropDownList(
+                $customer,
+                [
+                    'prompt' => 'Lựa chọn khách hàng',
+                ]
+            );?>
+        </div>
+        <div class="col-lg-4">
+            <?= $form->field($model,'sodh')->textInput();?>
+        </div>
+        <div class="col-lg-4">
+            <?php
+                $date = date('Y-m-d',time());
+                $model->ngay = $date;
+                echo $form->field($model,'ngay')->widget(\kartik\date\DatePicker::classname(),[
+                    'pluginOptions' => [
+                        'autoclose' => true,
+                        'format' => 'yyyy-mm-dd',
+                    ]
+                ]);
+            ?>
+        </div>
+    </div>
 
-    <?= $form->field($model, 'sodh')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'phone')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'provincial_id')->dropDownList(
-            $provincial,
-            [
-                'prompt' => '--Lựa chọn tỉnh/thành--'
-            ]
-    ) ?>
-
-    <?= $form->field($model, 'project')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'status_id')->dropDownList(
-        $status,
-        [
-            'prompt' => '--Chọn trạng thái thương thảo--'
-        ]  
-    ) ?>
-   
     <div id="w2" class="grid-view table-responsive form-group">
         <div class="summary">
             Tổng giá trị đơn hàng là: <span id="giatridonhang"></span>
         </div>
-    <table class="table table-striped table-hover ">
+    <table class="table table-striped table-hover table-bordered">
         <thead>
             <tr>
-                <th width="5%">STT</th>
-                <th width="55%" style="text-align:center;">Tên sản phẩm</th>
-                <th width="10%" style="text-align:center">Số lượng</th>
-                <th width="20%" style="text-align:center">Đơn giá</th>
-                <th width="5%" class="action-column">Action</th>
+                <th width="5%" data-col-seq="0">STT</th>
+                <th width="50%" style="text-align:center;" data-col-seq="1">Tên sản phẩm</th>
+                <th width="10%" style="text-align:center" data-col-seq="2">Số lượng</th>
+                <th width="15%" style="text-align:center" data-col-seq="3">Đơn giá</th>
+                <th width="10%" style="text-align:center" data-col-seq="4">Tiến độ yêu cầu</th>
+                <th width="10%" style="text-align:center" data-col-seq="5">Tiến độ thực tế</th>
+                <th width="5%" class="column-action">Action</th>
             </tr>
         </thead>
-        <tbody>
-            <?php 
-                foreach ($modelDetails as $index => $modelDetail) {
-            ?>
-            <tr id="row_<?php echo $index; ?>" data-key="0">
-                <td data-col-seq="0"><?php echo ($index+1); ?></td>
-                <td data-col-seq="1">
-                    <?php echo $form->field($modelDetail,"[$index]product")->textInput()->label(false); ?>
-                </td>
-                <td data-col-seq="2">
-                    <?php echo $form->field($modelDetail,"[$index]quantity")->textInput()->label(false)->widget(MaskedInput::className(),[
-                        'clientOptions' => [
-                            'alias' => 'numeric',
-                            'removeMaskOnSubmit' => true,
-                            'groupSeparator' => '.',
-                            'autoGroup' => true,
-                            'autoUnmask' => true,
-                            'unmaskAsNumber' => true,
-                        ],
-                    ]); ?>
-                </td>
-                <td data-col-seq="3">
-                    <?php echo $form->field($modelDetail,"[$index]price")->textInput()->label(false)->widget(MaskedInput::className(),[
-                        'clientOptions' => [
-                            'alias' => 'integer',
-                            'removeMaskOnSubmit' => true,
-                            'groupSeparator' => '.',
-                            'autoGroup' => true,
-                            'autoUnmask' => true,
-                            'unmaskAsNumber' => true,
-                        ],
-                    ]); ?>
-                </td>
-                <td data-col-seq="4">
-                    <button type="button" class="btn btn-danger remove-product" id="<?php echo $index;?>">Xóa <span class="glyphicon glyphicon-trash"></span></button>
-                </td>
-            </tr>
 
-            <?php } ?>
+        <tbody>
         </tbody>
     </table>
     </div>
     
     <div class="form-group">
-        <?php echo Html::button('Thêm dòng',['class'=>'btn btn-success themmoi','id'=>'themmoi']).' '.Html::submitButton('Lưu', ['class' => 'btn btn-danger']) ?>
+        <?php
+            echo    Html::button('<i class="glyphicon glyphicon-plus"></i> Thêm mới',['class'=>'btn btn-success','id' => 'modalButton']).' '.
+                    Html::submitButton('<i class="glyphicon glyphicon-floppy-disk"></i> Lưu',['class'=>'btn btn-primary','id'=>'submitButton']);
+        ?>
     </div>
 
     <?php ActiveForm::end(); ?>
